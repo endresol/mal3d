@@ -1,52 +1,25 @@
-# NFT ERC721 Collection
+# Moon Ape Lab 3D
 
-An all-in-one solution for `ERC721` collections. Build, test and deploy your smart contract, together with a totally
-integrated DAPP within a simple yet powerful workspace.
+This project contains the code for the Moon Ape Lab 3D collection contract and minting dapp.
 
-## Disclaimer
-This project was created for educational purposes, please refer to the [LICENCE](LICENSE) file for further information.
+The project is cloned from the HashlipsLabs repo with some additional input from datboi-1337
 
-## Main features
-- extremely high gas efficiency (users are going to pay lower gas fees compared to traditional collections)
-- whitelist support with customizable list size (using a Merkle Tree for verification)
-- automated contract verification through block explorers (e.g. Etherscan)
-- simple CLI commands that guide you through all the sale steps (whitelist, pre-sale, public sale)
-- built as a Hardhat project with TypeScript support for a better development experience
-- includes a fully-featured minting DAPP (React + TypeScript + SCSS + Webpack)
-- full support for contract interaction through block explorers (e.g. Etherscan), for all the users that do not trust custom DAPPs (including the `whitelistMint(...)` function)
-- customizable minting DAPP (from basic branding to complete customization)
-- now based on `ERC721A`
+## Solidity smart contract
 
-## YouTube tutorials
+The smart contract for this collections is a bot more complex that your standard NFT collection
+The collections has a 2d conterpart and the two collections need to be linked in a way. We will achive this by adding metadata to the collection.
 
-|Lesson ID|Description|Video link|
-|---|---|---|
-|`00a`|Basic setup on **Windows 10**|https://youtu.be/zjlg-0622PU|
-|`00b`|Basic setup on **macOS Catalina (Intel-based)**|https://youtu.be/acqXzKN5Xys|
-|`00c`|Basic setup on **Linux**|https://youtu.be/imuqi6Vg3Zw|
-|`01`|Speedrun: create and deploy a smart contract + DAPP (v2.x)|https://youtu.be/AFrsJRLrZEM|
-|`02`|The smart contract project|https://youtu.be/XToWWExBLXE|
-|`03`|The minting DAPP project|https://youtu.be/gs9mVwkn8u4|
-|`04`|Configuration and security|https://youtu.be/pkA86GHU_xw|
-|`05`|Managing the collection without leaving Visual Studio Code|https://youtu.be/yOVKEeRMJSs|
-|`06`|Managing the contract using Truffle Dashboard|https://youtu.be/fwdIA5UuPmM|
-|`07`|Running smart contract functions manually on the block explorer|https://youtu.be/zhvTJhBbtnE|
-|`08`|Customizing the look and feel of the DAPP|https://youtu.be/GoDp6yZAY9A|
-|`09`|Deploying the DAPP|https://youtu.be/uUrbIXUgVz4|
+### Minting rules
 
-## Legacy tutorials
+Also the minting rules are a bit different.
 
-|Description|Video link|
-|---|---|
-|Speedrun: create and deploy a smart contract + DAPP (v1.x)|https://youtu.be/VpXJZSqLO8A|
+The team will be able to mint their current 2d versions for free.
+Then raffle winner etc can mint up to 3 of their current 2d version for free.
 
-## Requirements
+This is followed by 2 whitelists rounds for different fees.
 
-### Software
-- [Visual Studio Code](https://code.visualstudio.com/) (with the [Solidity](https://marketplace.visualstudio.com/items?itemName=JuanBlanco.solidity) extension)
-- [NodeJs](https://nodejs.org/) (with the [Yarn package manager](https://yarnpkg.com/getting-started/install))
+Then a mint for partner project holders
 
-### Services
-- Etherscan free API key _(optional: used for the automated contract verificiation, as well as retrieving the current values for gas cost estimation)_
-- Infura free basic plan or higher _(optional: used by the CLI commands in order to perform operations on real blockchains, you can skip this if you deploy and manage your contract [using Truffle Dashboard](https://youtu.be/fwdIA5UuPmM))_
-- Coin Market Cap free API key _(optional: used for retrieving the current token price for gas cost estimation in USD)_
+And at last a public mint.
+
+For the first 4 phases the reveal should be instant, but for the last two on a set date, and if not sold-out, the remaining should be hidden.
