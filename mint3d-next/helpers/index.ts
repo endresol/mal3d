@@ -1,0 +1,1 @@
+export { getStatusFromPhase } from "./stringfunctions";
