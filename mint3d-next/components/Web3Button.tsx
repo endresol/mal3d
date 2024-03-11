@@ -19,7 +19,8 @@ const ConnectButton = ({ connect }: ConnectProps) => {
   );
 };
 
-const shortAddress = (address: string) => {
+const shortAddress = (address: string | null | undefined) => {
+  if (!address) return "----";
   return (
     address.substring(0, 4) + "..." + address.substring(address.length - 3)
   );
@@ -27,7 +28,7 @@ const shortAddress = (address: string) => {
 
 interface DisconnectProps {
   disconnect: () => Promise<void> | null;
-  address: string | null;
+  address: string | null | undefined;
 }
 
 const DisconnectButton = ({ disconnect, address }: DisconnectProps) => {

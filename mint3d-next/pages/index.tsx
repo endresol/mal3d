@@ -15,20 +15,30 @@ const Home: NextPage = () => {
   const { network, address } = useWeb3Context();
   const { passDiscount, passToken } = useDiscountCard();
   const { contract } = useContractContext();
-  const { updateDiscount, updateWhitelist } = useMinterContext();
+  const { minter, fetchMinterData } = useMinterContext();
+
+  useEffect(() => {
+    fetchMinterData();
+  }, [fetchMinterData]);
 
   // if (Whitelist.contains(address)) {
   //   updateWhitelist(Whitelist.getProofForAddress(address));
   // }
 
-  useEffect(() => {
-    console.log("update discount effect", passDiscount, passToken);
+  // useEffect(() => {
+  //   console.log("update discount effect", passDiscount, passToken);
 
-    if (updateDiscount) {
-      updateDiscount(passToken, passDiscount);
-      updateWhitelist(Whitelist.getProofForAddress(address));
-    }
-  }, [updateDiscount, passDiscount, passToken, address]);
+  //   if (setMinter) {
+  //     setMinter({
+  //       ...minter,
+  //       discountCard: passToken,
+  //       discountPercent: passDiscount,
+  //       merkleProof: Whitelist.getProofForAddress(address),
+  //     });
+  //     // updateDiscount(passToken, passDiscount);
+  //     // updateWhitelist(Whitelist.getProofForAddress(address));
+  //   }
+  // }, [setMinter, passDiscount, passToken, address, minter]);
 
   // useEffect(() => {
   //   console.log("contract context effect");

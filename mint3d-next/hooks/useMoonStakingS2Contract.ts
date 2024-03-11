@@ -10,7 +10,10 @@ const useMoonStakingS2Contract = () => {
   const { signer } = useWeb3Context();
 
   return useMemo(
-    () => signer && new Contract(contractAddress, MoonStakingS2ABI, signer),
+    () =>
+      signer &&
+      contractAddress &&
+      new Contract(contractAddress, MoonStakingS2ABI, signer),
     [signer]
   );
 };

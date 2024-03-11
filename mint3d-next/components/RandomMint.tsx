@@ -29,7 +29,7 @@ const RandomMint: React.FC = () => {
   const [tokenPrice, setTokenPrice] = useState<BigNumber>(
     BigNumber.from("60000000000000000")
   );
-  const [discountPrice, setDiscountPrice] = useState<bigNumber>(
+  const [discountPrice, setDiscountPrice] = useState<BigNumber>(
     BigNumber.from("0")
   );
 
@@ -50,6 +50,7 @@ const RandomMint: React.FC = () => {
   const handleMint = async () => {
     if (!mal3dContract) {
       toast.error("Contract not loaded. Reload page an try again.");
+      return;
     }
     if (passDiscount > 0) {
       const totalprice = discountPrice.mul(mintAmount);
@@ -99,13 +100,11 @@ const RandomMint: React.FC = () => {
 
   return (
     <>
-      <div className='hidden text-yellow-100'>
-        Partner: {minter.partnerCollection}
+      <div className=' text-yellow-100'>
+        Partner: {minter?.partnerCollection}
       </div>
-      <div className='hidden text-yellow-100'>
-        MerkleProof: {minter.merkleProof}
-      </div>
-      {minter.canMint ? (
+      <div className=' text-yellow-100'>MerkleProof: {minter?.merkleProof}</div>
+      {minter?.canMint ? (
         <>
           <div className='container mx-auto max-w-sm bg-white border rounded-lg p-1'>
             <div className='mx-auto w-full h-3/4'>

@@ -9,7 +9,10 @@ const useMALPassContract = () => {
   const { signer } = useWeb3Context();
 
   return useMemo(
-    () => signer && new Contract(contractAddress, moonpassAbi, signer),
+    () =>
+      signer &&
+      contractAddress &&
+      new Contract(contractAddress, moonpassAbi, signer),
     [signer]
   );
 };

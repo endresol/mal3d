@@ -1,3 +1,4 @@
+// @ts-nocheck
 import whitelistAddresses from "../scripts/whitelist-limit.json";
 import { MerkleTree } from "merkletreejs";
 import keccak256 from "keccak256";

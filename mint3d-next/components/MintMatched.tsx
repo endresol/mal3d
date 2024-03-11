@@ -12,13 +12,15 @@ import Whitelist from "../helpers/whitelist";
 export function extractIntegers(
   bigNumbers: BigNumber[] | null | undefined
 ): number[] {
+  if (!bigNumbers) return [];
   return bigNumbers.map((bigNumber) => Number(bigNumber));
 }
 
 export function convertToBigNumber(
-  numbers: numbers[] | null | undefined
-): number[] {
-  return numbers.map((number) => BigNumber.from(number));
+  myNumbers: number[] | null | undefined
+): BigNumber[] {
+  if (!myNumbers) return [];
+  return myNumbers.map((number) => BigNumber.from(number));
 }
 
 const MintMatched: React.FC = () => {

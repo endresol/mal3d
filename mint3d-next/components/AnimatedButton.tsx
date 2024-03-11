@@ -2,7 +2,7 @@ import React from "react";
 
 interface AnimatedButtonProps {
   children: any;
-  handleClick: (params: any) => any;
+  handleClick: () => any;
 }
 
 const AnimatedButton: React.FC<AnimatedButtonProps> = ({

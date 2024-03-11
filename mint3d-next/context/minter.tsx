@@ -1,84 +1,44 @@
-import { createContext, useReducer, useMemo, useCallback } from "react";
-import { useWeb3Context } from "@/context";
+// import { createContext, useMemo, useState, useContext, ReactNode } from "react";
 
-const initialState = {
-  partnerCollection: "moonapelab",
-  discountCard: 0,
-  discountPercent: 0,
-  merkleProof: 0,
-  canMint: false,
-};
+// type MinterData = {
+//   partnerCollection: string;
+//   discountCard: number;
+//   discountPercent: number;
+//   merkleProof: string | null;
+//   canMint: boolean;
+// };
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "UPDATE_PARTNER":
-      return {
-        ...state,
-        partnerCollection: action.payload,
-        canMint:
-          (action.payload !== "moonapelab" && action.payload != "") ||
-          state.merkleProof != "",
-      };
-    case "UPDATE_DISCOUNT":
-      return {
-        ...state,
-        discountCard: action.payload.discountCard,
-        discountPercent: action.payload.discountPercent,
-      };
-    case "UPDATE_PROOF":
-      return {
-        ...state,
-        merkleProof: action.payload,
-        canMint:
-          (state.partnerCollection !== "moonapelab" &&
-            state.partnerCollection != "") ||
-          action.payload != "",
-      };
-    default:
-      return state;
-  }
-};
+// const initialState = {
+//   partnerCollection: "moonapelab",
+//   discountCard: 0,
+//   discountPercent: 0,
+//   merkleProof: null,
+//   canMint: false,
+// };
 
-const MinterContext = createContext();
+// const MinterContext = createContext({
+//   minter: initialState,
+//   setMinter: (any) => null,
+// });
 
-const MinterContextProvider = ({ children }) => {
-  // const { discountCard, discountPercent } = useDiscountCard();
-  // initialState.discountCard = discountCard;
-  // initialState.discountPercent = discountPercent;
+// function MinterContextProvider({ children }: { children: ReactNode }) {
+//   const [minter, setMinter] = useState<MinterData | null>(initialState);
 
-  const [minter, dispatch] = useReducer(reducer, initialState);
-  const { address } = useWeb3Context();
+//   const value = useMemo(
+//     () => ({
+//       minter,
+//       setMinter,
+//     }),
+//     [minter]
+//   );
 
-  console.log("inside the minter provider init code...:", address);
+//   return (
+//     <MinterContext.Provider value={value}>{children}</MinterContext.Provider>
+//   );
+// }
 
-  const updatePartner = useCallback((newPartner) => {
-    dispatch({
-      type: "UPDATE_PARTNER",
-      payload: newPartner,
-    });
-  }, []);
+// export function useMinterContext() {
+//   return useContext(MinterContext);
+// }
 
-  const updateDiscount = useCallback((discountCard, discountPercent) => {
-    dispatch({
-      type: "UPDATE_DISCOUNT",
-      payload: { discountCard, discountPercent },
-    });
-  }, []);
-
-  const updateWhitelist = useCallback((merkleProof) => {
-    dispatch({
-      type: "UPDATE_PROOF",
-      payload: merkleProof,
-    });
-  }, []);
-
-  const value = useMemo(() => {
-    return { minter, updatePartner, updateDiscount, updateWhitelist };
-  }, [minter, updatePartner, updateDiscount, updateWhitelist]);
-
-  return (
-    <MinterContext.Provider value={value}>{children}</MinterContext.Provider>
-  );
-};
-
-export { MinterContextProvider, MinterContext };
+// export { MinterContextProvider, MinterContext };

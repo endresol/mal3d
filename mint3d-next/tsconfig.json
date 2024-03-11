@@ -34,7 +34,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "helpers/whitelist-limit.ts.js"  ],
   "exclude": [
     "node_modules"
   ]

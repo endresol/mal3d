@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { ethers } from "ethers";
 
-import { useMinterContext } from "@/hooks/useMinterContext";
 import { useWeb3Context } from "../context";
+import { useMinterContext } from "../hooks/useMinterContext";
 
 const ERC721ABI = [
   "function balanceOf(address owner) view returns (uint256)",
@@ -44,15 +44,21 @@ const partnerList = [
 const PartnerCollections: React.FC = () => {
   const [partners, setPartners] = useState(partnerList);
   const { signer, address } = useWeb3Context();
-  const { updatePartner } = useMinterContext();
+  const { minter, updatePartner } = useMinterContext();
 
-  const handlePartnerClick = (partner) => {
+  const handlePartnerClick = (partner: {
+    name?: string;
+    icon?: string;
+    real_address?: string;
+    address: any;
+    holder: any;
+  }) => {
     if (partner.holder) updatePartner(partner.address);
   };
 
   const checkContract = async () => {
     const partnerUpdate = [];
-
+    if (!signer) return;
     for (const partner of partners) {
       const partnerContract = new ethers.Contract(
         partner.address,

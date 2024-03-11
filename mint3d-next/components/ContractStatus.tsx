@@ -9,19 +9,20 @@ import DiscountCard from "./DiscountCard";
 import { useMinterContext } from "@/hooks/useMinterContext";
 import { useContractContext } from "@/hooks/useContractContext";
 
-const ContractInfoObject = {
-  isPause: true,
-  tokenCount: 0,
-  maxMintTx: 0,
-  maxMintWallet: 0,
-  mintPhase: 0,
-  mintPrice: 0,
+type ContractInfoObject = {
+  isPause: boolean;
+  tokenCount: number;
+  maxMintTx: number;
+  maxMintWallet: number;
+  mintPhase: BigNumber;
+  mintPrice: BigNumber;
 };
 
 const ContractStatus: React.FC = () => {
   const { address } = useWeb3Context();
   const MAL3dContract = useMAL3dContract();
   const { minter } = useMinterContext();
+  const { contract } = useContractContext();
 
   const [contractInfo, setContractInfo] = useState<ContractInfoObject>();
 
@@ -64,13 +65,11 @@ const ContractStatus: React.FC = () => {
 
           console.log("is Paused", contract.isPause);
 
-          setIsSaleOpen(
-            contract.mintPhase.gt(0) && contract.tokenCount?.lt(8000)
-          );
+          setIsSaleOpen(values[4] > 0 && values[1] < 8000);
           console.log("open?", isSaleOpen);
 
-          const _discountPrice = contract.mintPrice
-            .mul(100 - minter.discountPercent)
+          const _discountPrice = values[5]
+            .mul(100 - (minter ? minter.discountPercent : 0))
             .div(100);
           setDiscountPrice(_discountPrice);
 
@@ -110,9 +109,11 @@ const ContractStatus: React.FC = () => {
           <div className='text-xl font-bold'>
             {isSaleOpen ? (
               <>
-                {contractInfo.isPaused
+                {contractInfo?.isPause
                   ? "Paused"
-                  : `${getStatusFromPhase(contractInfo.mintPhase.toNumber())}`}
+                  : `${getStatusFromPhase(
+                      contractInfo ? contractInfo.mintPhase : BigNumber.from(0)
+                    )}`}
               </>
             ) : (
               <span>Closed</span>
@@ -120,14 +121,14 @@ const ContractStatus: React.FC = () => {
           </div>
         </div>
 
-        {isSaleOpen && (
+        {isSaleOpen && contractInfo && (
           <>
             <div>
               <div> Limits </div>
               <div className='text-sm font-medium'>
-                {`${contractInfo.maxMintTx} per transaction`}
+                {`${contractInfo?.maxMintTx} per transaction`}
                 <br />
-                {`${contractInfo.maxMintWallet} per wallet`}
+                {`${contractInfo?.maxMintWallet} per wallet`}
               </div>
             </div>
             <div>
@@ -146,7 +147,7 @@ const ContractStatus: React.FC = () => {
               </div>
             </div>
             <div className='mx-auto'>
-              <DiscountCard value={minter.discountPercent} />
+              <DiscountCard value={minter?.discountPercent ?? 0} />
             </div>
           </>
         )}

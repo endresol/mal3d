@@ -10,7 +10,10 @@ const useMAL3DContract = () => {
   const { signer } = useWeb3Context();
 
   return useMemo(
-    () => signer && new Contract(contractAddress, mal3DavatarAbi, signer),
+    () =>
+      signer &&
+      contractAddress &&
+      new Contract(contractAddress, mal3DavatarAbi, signer),
     [signer]
   );
 };

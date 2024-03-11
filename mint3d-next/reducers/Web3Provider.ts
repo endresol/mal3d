@@ -16,8 +16,8 @@ export const web3InitalState: Web3ProviderState = {
   signer: null,
   address: null,
   network: null,
-  connect: null,
-  disconnect: null,
+  connect: () => null,
+  disconnect: () => null,
 };
 
 export type Web3Action =

@@ -1,8 +1,10 @@
+// @ts-nocheck
 import whitelistAddresses from "../scripts/whitelist.json";
 import { MerkleTree } from "merkletreejs";
 import keccak256 from "keccak256";
 import { Buffer } from "buffer/index.js";
 
+/* eslint-disable import/no-anonymous-default-export */
 export default new (class Whitelist {
   private merkleTree!: MerkleTree;
 
@@ -19,7 +21,8 @@ export default new (class Whitelist {
     return this.merkleTree;
   }
 
-  public getProofForAddress(address: string): string[] {
+  public getProofForAddress(address: string | null | undefined): string[] {
+    if (!address) return [];
     return this.getMerkleTree().getHexProof(keccak256(address));
   }
 
@@ -30,7 +33,8 @@ export default new (class Whitelist {
       .replaceAll(" ", "");
   }
 
-  public contains(address: string): boolean {
+  public contains(address: string | null | undefined): boolean {
+    if (!address) return false;
     return (
       this.getMerkleTree().getLeafIndex(Buffer.from(keccak256(address))) >= 0
     );
