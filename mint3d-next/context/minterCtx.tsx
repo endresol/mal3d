@@ -66,10 +66,12 @@ function useMinterContextValue(): MinterContextData {
         .then((response) => response.json())
         .then((fetchedDelegates) => {
           console.log("delegate.xyz:", fetchedDelegates);
-          const validDelegates = fetchedDelegates.filter((delegate) => {
-            // Check if the 'from' value is in the whitelist
-            return whitelist.contains(delegate.from);
-          });
+          const validDelegates = fetchedDelegates.filter(
+            (delegate: { from: string | null | undefined }) => {
+              // Check if the 'from' value is in the whitelist
+              return whitelist.contains(delegate.from);
+            }
+          );
           if (validDelegates.length > 0) {
             console.log("Valid delegate.xyz:", validDelegates);
             delegateAddress = validDelegates[0].from;
