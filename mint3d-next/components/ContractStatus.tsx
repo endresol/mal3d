@@ -1,6 +1,6 @@
 import { BigNumber, ethers } from "ethers";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import useMAL3dContract from "../hooks/useMAL3dContract";
 import { useWeb3Context } from "../context";
 import { getStatusFromPhase } from "@/helpers";
@@ -24,72 +24,86 @@ const ContractStatus: React.FC = () => {
   const { minter } = useMinterContext();
   const { contract } = useContractContext();
 
-  const [contractInfo, setContractInfo] = useState<ContractInfoObject>();
-
   const [discountPrice, setDiscountPrice] = useState<BigNumber>(
-    BigNumber.from(0)
+    ethers.utils.parseEther("1")
   );
 
-  const [isSaleOpen, setIsSaleOpen] = useState<boolean>(false);
-
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
   useEffect(() => {
-    console.log("effect", MAL3dContract, address);
-
-    if (!MAL3dContract) return;
-    let mounted = true;
-
-    const getContractStatus = async () => {
-      let contract = contractInfo;
-      try {
-        const allPromise = Promise.all([
-          MAL3dContract.paused(),
-          MAL3dContract.tokenCount(),
-          MAL3dContract.maxMintAmountPerTx(),
-          MAL3dContract.maxMintAmountPerWallet(),
-          MAL3dContract.mintPhase(),
-          MAL3dContract.cost(),
-        ]);
-
-        allPromise.then((values) => {
-          contract = {
-            isPause: values[0],
-            tokenCount: values[1],
-            maxMintTx: values[2],
-            maxMintWallet: values[3],
-            mintPhase: values[4],
-            mintPrice: values[5],
-          };
-          setContractInfo((prev) => contract);
-
-          console.log("is Paused", contract.isPause);
-
-          setIsSaleOpen(values[4] > 0 && values[1] < 8000);
-          console.log("open?", isSaleOpen);
-
-          const _discountPrice = values[5]
-            .mul(100 - (minter ? minter.discountPercent : 0))
-            .div(100);
-          setDiscountPrice(_discountPrice);
-
-          console.log("discountPrice in useEffect", discountPrice.toString());
-        });
-      } catch (err) {
-        console.error("getContractStatus", err);
-      }
-    };
-
-    if (mounted) {
-      getContractStatus().then(() => {
-        setIsLoading(false);
-      });
+    if (contract && minter) {
+      const newPrice = contract.price
+        .mul(100 - minter.discountPercent)
+        .div(100);
+      setDiscountPrice(newPrice);
     }
+  }, [contract, minter]);
 
-    return () => {
-      mounted = false;
-    };
-  }, [address, MAL3dContract, minter]);
+  // const discountPrice = calculateDiscountPrice(
+  //   contract?.price,
+  //   minter?.discountPercent
+  // );
+
+  // const [contractInfo, setContractInfo] = useState<ContractInfoObject>();
+
+  const [isSaleOpen, setIsSaleOpen] = useState<boolean>(true);
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  // useEffect(() => {
+  //   console.log("effect", MAL3dContract, address);
+
+  //   if (!MAL3dContract) return;
+  //   let mounted = true;
+
+  //   const getContractStatus = async () => {
+  //     let contract = contractInfo;
+  //     try {
+  //       const allPromise = Promise.all([
+  //         MAL3dContract.paused(),
+  //         MAL3dContract.tokenCount(),
+  //         MAL3dContract.maxMintAmountPerTx(),
+  //         MAL3dContract.maxMintAmountPerWallet(),
+  //         MAL3dContract.mintPhase(),
+  //         MAL3dContract.cost(),
+  //       ]);
+
+  //       allPromise.then((values) => {
+  //         contract = {
+  //           isPause: values[0],
+  //           tokenCount: values[1],
+  //           maxMintTx: values[2],
+  //           maxMintWallet: values[3],
+  //           mintPhase: values[4],
+  //           mintPrice: values[5],
+  //         };
+  //         setContractInfo((prev) => contract);
+
+  //         console.log("is Paused", contract.isPause);
+
+  //         setIsSaleOpen(values[4] > 0 && values[1] < 8000);
+  //         console.log("open?", isSaleOpen);
+
+  //         const _discountPrice = values[5]
+  //           .mul(100 - (minter ? minter.discountPercent : 0))
+  //           .div(100);
+  //         setDiscountPrice(_discountPrice);
+
+  //         console.log("discountPrice in useEffect", discountPrice.toString());
+  //       });
+  //     } catch (err) {
+  //       console.error("getContractStatus", err);
+  //     }
+  //   };
+
+  //   if (mounted) {
+  //     getContractStatus().then(() => {
+  //       setIsLoading(false);
+  //     });
+  //   }
+
+  //   return () => {
+  //     mounted = false;
+  //   };
+  // }, [address, MAL3dContract, minter]);
 
   if (isLoading)
     return <div className='text-lg font-medium text-white'> Loading ... </div>;
@@ -100,7 +114,7 @@ const ContractStatus: React.FC = () => {
         <div>
           <div className=''>Supply</div>
           <div className='text-xl font-bold'>
-            {contractInfo?.tokenCount?.toString()}/80(00)
+            {contract?.tokenCount?.toString()}/80(00)
           </div>
         </div>
 
@@ -109,11 +123,9 @@ const ContractStatus: React.FC = () => {
           <div className='text-xl font-bold'>
             {isSaleOpen ? (
               <>
-                {contractInfo?.isPause
+                {contract?.paused
                   ? "Paused"
-                  : `${getStatusFromPhase(
-                      contractInfo ? contractInfo.mintPhase : BigNumber.from(0)
-                    )}`}
+                  : `${getStatusFromPhase(contract ? contract.phase : 0)}`}
               </>
             ) : (
               <span>Closed</span>
@@ -121,27 +133,27 @@ const ContractStatus: React.FC = () => {
           </div>
         </div>
 
-        {isSaleOpen && contractInfo && (
+        {isSaleOpen && contract && (
           <>
             <div>
               <div> Limits </div>
               <div className='text-sm font-medium'>
-                {`${contractInfo?.maxMintTx} per transaction`}
+                {`${contract?.maxPerTx} per transaction`}
                 <br />
-                {`${contractInfo?.maxMintWallet} per wallet`}
+                {`${contract?.maxPerWallet} per wallet`}
               </div>
             </div>
             <div>
               <div> Price </div>
               <div
                 className={`text-sm font-medium ${
-                  contractInfo.mintPrice > discountPrice && "line-through"
+                  contract.price.gt(discountPrice) && "line-through"
                 }`}
               >
-                {`${ethers.utils.formatEther(contractInfo.mintPrice)} ETH`}
+                {`${ethers.utils.formatEther(contract.price)} ETH`}
               </div>
               <div className='text-sm font-medium'>
-                {contractInfo.mintPrice.gt(discountPrice)
+                {contract.price.gt(discountPrice)
                   ? `${ethers.utils.formatEther(discountPrice)} ETH`
                   : ""}
               </div>

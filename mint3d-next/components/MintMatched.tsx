@@ -4,6 +4,8 @@ import { useWeb3Context } from "../context";
 import useMAL3dContract from "../hooks/useMAL3dContract";
 import useMoonStakingS2Contract from "@/hooks/useMoonStakingS2Contract";
 import { useDiscountCard } from "@/hooks/useDiscountCard";
+import { useMinterContext } from "@/hooks/useMinterContext";
+import { useContractContext } from "@/hooks/useContractContext";
 import AnimatedButton from "./AnimatedButton";
 import { toast } from "react-toastify";
 import { etherscanTransaction } from "@/helpers/toasts";
@@ -30,12 +32,29 @@ const MintMatched: React.FC = () => {
   const [unstakedApes, setUnstakedApes] = useState<number[]>([]);
   const [stakedApes, setStakedApes] = useState<number[]>([]);
   const [selectedApes, setSelectedApes] = useState<number[]>([]);
+
+  const { minter } = useMinterContext();
+  const { contract } = useContractContext();
+
   const [mintPrice, setMintPrice] = useState<BigNumber>(BigNumber.from(0));
+  const [discountPrice, setDiscountPrice] = useState<BigNumber>(
+    BigNumber.from(0)
+  );
+
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [totalprice, setTotalprice] = useState<BigNumber>(BigNumber.from(0));
 
   const mal3dContract = useMAL3dContract();
   const malStakingContract = useMoonStakingS2Contract();
+
+  useEffect(() => {
+    if (contract && minter) {
+      const newPrice = contract.price
+        .mul(100 - minter.discountPercent)
+        .div(100);
+      setDiscountPrice(newPrice);
+    }
+  }, [contract, minter]);
 
   const { passDiscount, passToken } = useDiscountCard();
 
@@ -46,16 +65,25 @@ const MintMatched: React.FC = () => {
 
     if (isSelected) {
       setSelectedApes(selectedApes.filter((id) => id !== imageId));
-      setTotalprice(totalprice?.sub(mintPrice));
+      setTotalprice(
+        totalprice?.sub(discountPrice.gt(0) ? discountPrice : mintPrice)
+      );
     } else {
       if (selectedApes.length < maxMintTx) {
         setSelectedApes([...selectedApes, imageId]);
-        setTotalprice(totalprice?.add(mintPrice));
+        setTotalprice(
+          totalprice?.add(discountPrice.gt(0) ? discountPrice : mintPrice)
+        );
       }
     }
   };
 
   const handleMintClick = async () => {
+    if (selectedApes.length === 0) {
+      toast.error("Please select ape(s) to mint");
+      return;
+    }
+
     console.log("handleMintClick", selectedApes);
     const proof = Whitelist.getProofForAddress(address);
 

@@ -14,12 +14,20 @@ import Whitelist from "../helpers/whitelist";
 const Home: NextPage = () => {
   const { network, address } = useWeb3Context();
   const { passDiscount, passToken } = useDiscountCard();
-  const { contract } = useContractContext();
-  const { minter, fetchMinterData } = useMinterContext();
+  const {
+    contract,
+    isLoading: isContractLoading,
+    fetchContractData,
+  } = useContractContext();
+  const { minter, isLoading, fetchMinterData } = useMinterContext();
 
   useEffect(() => {
     fetchMinterData();
   }, [fetchMinterData]);
+
+  useEffect(() => {
+    fetchContractData();
+  }, [fetchContractData]);
 
   // if (Whitelist.contains(address)) {
   //   updateWhitelist(Whitelist.getProofForAddress(address));
@@ -70,10 +78,12 @@ const Home: NextPage = () => {
           <title>Moon Ape Lab</title>
           <link rel='icon' href='favicon.png' />
         </Head>
-        <div className='flex flex-row flex-1 gap-2 mt-4'>
+        <div className='flex flex-row flex-1 gap-2 mt-4 text-white'>
           <div className='w-2/12'>
             <ContractStatus />
           </div>
+
+          {/* Here we will load components based on contract phase */}
           <div className='w-2/12'>
             <PartnerCollections />
           </div>
