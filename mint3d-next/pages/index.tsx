@@ -83,22 +83,32 @@ const Home: NextPage = () => {
             <ContractStatus />
           </div>
 
-          {/* Here we will load components based on contract phase */}
-          <div className='w-2/12'>
-            <PartnerCollections />
-          </div>
-          <div className='w-8/12 '>
-            {/* <RandomMint /> */}
-            <MatchedMint />
-            {/* {currentMintPhase >= 1 && currentMintPhase <= 4 ? (
-          ) : (
-            <div className='flex flex-col justify-center items-center'>
-              <h1 className='text-white font-bold text-4xl mb-2'>
-                Minting is closed
-              </h1>
+          {(contract.phase == 0 || contract.paused) && (
+            <div className='w-10/12'>
+              <h2 className='text-xl'>Minting paused</h2>
             </div>
-          )} */}
-          </div>
+          )}
+
+          {contract?.phase <= 5 && (
+            <>
+              <div className='w-10/12 '>
+                <MatchedMint />
+              </div>
+            </>
+          )}
+
+          {contract?.phase >= 6 && (
+            <>
+              {contract?.phase == 5 && (
+                <div className='w-2/12'>
+                  <PartnerCollections />
+                </div>
+              )}
+              <div className='w-8/12 '>
+                <RandomMint />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>

@@ -22,7 +22,7 @@ const defaultState: ContractData = {
 };
 
 export interface ContractContextData {
-  contract: ContractData | null | undefined;
+  contract: ContractData;
   isLoading: boolean;
   fetchContractData: () => void;
 }
@@ -38,7 +38,7 @@ export const ContractContext = createContext<ContractContextData>(
 );
 
 function useContractContextValue(): ContractContextData {
-  const [contract, setContract] = useState<ContractData>();
+  const [contract, setContract] = useState<ContractData>(defaultState);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const MAL3dContract = useMAL3dContract();
 
