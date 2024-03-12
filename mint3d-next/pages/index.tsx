@@ -88,8 +88,8 @@ const Home: NextPage = () => {
               <h2 className='text-xl'>Minting paused</h2>
             </div>
           )}
-
-          {contract?.phase <= 5 && (
+          {/* have to alter this to test contract 5 here and 6 on partner is correct */}
+          {contract?.phase <= 4 && (
             <>
               <div className='w-10/12 '>
                 <MatchedMint />
@@ -97,7 +97,7 @@ const Home: NextPage = () => {
             </>
           )}
 
-          {contract?.phase >= 6 && (
+          {contract?.phase >= 5 && (
             <>
               {contract?.phase == 5 && (
                 <div className='w-2/12'>

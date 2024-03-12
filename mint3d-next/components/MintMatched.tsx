@@ -57,7 +57,6 @@ const MintMatched: React.FC = () => {
   }, [contract, minter]);
 
   const { passDiscount, passToken } = useDiscountCard();
-
   const [maxMintTx, setMaxMintTx] = useState<number>(3);
 
   const handleApeClick = (imageId: number) => {
@@ -176,8 +175,7 @@ const MintMatched: React.FC = () => {
     };
   }, [address, malStakingContract, mal3dContract]);
 
-  console.log("staked:", stakedApes);
-
+  console.log("minterCtx:", minter);
   return (
     <>
       <div className='number-list grid grid-cols-6 gap-2'>
@@ -191,7 +189,7 @@ const MintMatched: React.FC = () => {
           </div>
         ))}
       </div>
-      {Whitelist.contains(address) ? (
+      {minter?.canMint ? (
         <div className='mt-4 text-white'>
           <div>Total mint price: {ethers.utils.formatEther(totalprice)}</div>
           <AnimatedButton handleClick={handleMintClick}>Mint</AnimatedButton>
