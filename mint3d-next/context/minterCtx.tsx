@@ -63,17 +63,11 @@ function useMinterContextValue(): MinterContextData {
 
   const updatePartner = useCallback(
     (partner: string) => {
-      const data: MinterData = {
-        partnerCollection: "moonapelab",
-        discountCard: passToken,
-        discountPercent: passDiscount,
-        merkleProof: null,
-        canMint: false,
-      };
-      setMinter(data);
-      console.log("data:", data);
+      if (minter) {
+        setMinter({ ...minter, partnerCollection: partner });
+      }
     },
-    [setMinter]
+    [setMinter, minter]
   );
 
   return {

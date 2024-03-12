@@ -13,9 +13,7 @@ import DiscountCard from "./DiscountCard";
 
 import { useMinterContext } from "@/hooks/useMinterContext";
 
-const etherscanTransaction = (hash: string) => {
-  return `<a href="https://sepolia.etherscan.io/tx/${hash}>">${hash}>hash<a>`;
-};
+import { etherscanTransaction } from "@/helpers/toasts";
 
 const RandomMint: React.FC = () => {
   const { address } = useWeb3Context();

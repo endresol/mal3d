@@ -13,10 +13,10 @@ interface ApeCardProps {
 const ApeCard: React.FC<ApeCardProps> = ({ id, onClick, isSelected }) => {
   const handleApeClick = (id: number) => {
     // console.log("ape click", id, isMinted);
-    // if (!isMinted) {
-    //   onClick(id);
-    // }
-    onClick(id);
+    if (!isMinted) {
+      onClick(id);
+    }
+    // onClick(id);
   };
 
   const isMinted = useIs2DMinted(BigNumber.from(id));

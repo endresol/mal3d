@@ -52,3 +52,5 @@ wallet 1: 0x169540c29A1B43e1fB34CD4034959cD5EaCE9915
 wallet 1: 0x1298150a0BeB2e7B2a50C83D656bBa79AAFD2F40
 
 wallet 2: 0xedd1F1DA23806c22DECcEF83D180BD0f98d3AB8B
+
+https://wanago.io/2020/09/28/react-context-api-hooks-typescript/

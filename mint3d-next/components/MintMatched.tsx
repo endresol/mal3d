@@ -1,10 +1,12 @@
-import { BigNumber } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import React, { useState, useEffect } from "react";
 import { useWeb3Context } from "../context";
 import useMAL3dContract from "../hooks/useMAL3dContract";
 import useMoonStakingS2Contract from "@/hooks/useMoonStakingS2Contract";
 import { useDiscountCard } from "@/hooks/useDiscountCard";
 import AnimatedButton from "./AnimatedButton";
+import { toast } from "react-toastify";
+import { etherscanTransaction } from "@/helpers/toasts";
 
 import ApeCard from "./ApeCard";
 import Whitelist from "../helpers/whitelist";
@@ -28,8 +30,9 @@ const MintMatched: React.FC = () => {
   const [unstakedApes, setUnstakedApes] = useState<number[]>([]);
   const [stakedApes, setStakedApes] = useState<number[]>([]);
   const [selectedApes, setSelectedApes] = useState<number[]>([]);
-  const [mintPrice, setMintPrice] = useState<BigNumber | null>(null);
+  const [mintPrice, setMintPrice] = useState<BigNumber>(BigNumber.from(0));
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [totalprice, setTotalprice] = useState<BigNumber>(BigNumber.from(0));
 
   const mal3dContract = useMAL3dContract();
   const malStakingContract = useMoonStakingS2Contract();
@@ -43,9 +46,11 @@ const MintMatched: React.FC = () => {
 
     if (isSelected) {
       setSelectedApes(selectedApes.filter((id) => id !== imageId));
+      setTotalprice(totalprice?.sub(mintPrice));
     } else {
       if (selectedApes.length < maxMintTx) {
         setSelectedApes([...selectedApes, imageId]);
+        setTotalprice(totalprice?.add(mintPrice));
       }
     }
   };
@@ -69,25 +74,30 @@ const MintMatched: React.FC = () => {
       console.log("apes", selectedApes);
 
       const props = { value: totalprice };
-      const hash = await mal3dContract.matchedMintDicounted(
+      const tx = await mal3dContract.matchedMintDicounted(
         convertToBigNumber(selectedApes),
         proof,
         passToken,
         props
       );
-
+      toast.info(etherscanTransaction(tx.hash));
       setSelectedApes([]);
+      await tx.wait();
+      toast.success("Transaction completed");
     } else {
       if (mintPrice && mal3dContract) {
         const totalprice = mintPrice.mul(selectedApes.length);
 
         const props = { value: totalprice };
-        const hash = await mal3dContract.matchedMint(
+        const tx = await mal3dContract.matchedMint(
           convertToBigNumber(selectedApes),
           proof,
           props
         );
+        toast.info(etherscanTransaction(tx.hash));
         setSelectedApes([]);
+        await tx.wait();
+        toast.success("Transaction completed");
       } else {
         console.error("Serious error on mint");
       }
@@ -154,7 +164,10 @@ const MintMatched: React.FC = () => {
         ))}
       </div>
       {Whitelist.contains(address) ? (
-        <AnimatedButton handleClick={handleMintClick}>Mint</AnimatedButton>
+        <div className='mt-4 text-white'>
+          <div>Total mint price: {ethers.utils.formatEther(totalprice)}</div>
+          <AnimatedButton handleClick={handleMintClick}>Mint</AnimatedButton>
+        </div>
       ) : (
         <div className='text-white font-bold text-xl tracking-wider'>
           {" "}
