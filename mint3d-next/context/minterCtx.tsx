@@ -106,7 +106,11 @@ function useMinterContextValue(): MinterContextData {
   const updatePartner = useCallback(
     (partner: string) => {
       if (minter) {
-        setMinter({ ...minter, partnerCollection: partner });
+        setMinter({
+          ...minter,
+          partnerCollection: partner,
+          canMint: partner != "moonapelab" ? true : false,
+        });
       }
     },
     [setMinter, minter]
