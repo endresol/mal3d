@@ -12,12 +12,13 @@ import { toast } from "react-toastify";
 import DiscountCard from "./DiscountCard";
 
 import { useMinterContext } from "@/hooks/useMinterContext";
-
+import { useContractContext } from "@/hooks/useContractContext";
 import { etherscanTransaction } from "@/helpers/toasts";
 
 const RandomMint: React.FC = () => {
   const { address } = useWeb3Context();
   const { minter } = useMinterContext();
+  const { contract } = useContractContext();
   const MAL3dContract = useMAL3dContract();
 
   const [canMint, setCanMint] = useState<boolean>(true);
@@ -102,7 +103,7 @@ const RandomMint: React.FC = () => {
         Partner: {minter?.partnerCollection}
       </div>
       <div className=' text-yellow-100'>MerkleProof: {minter?.merkleProof}</div>
-      {minter?.canMint ? (
+      {minter?.canMint || contract.phase == 6 ? (
         <>
           <div className='container mx-auto max-w-sm bg-white border rounded-lg p-1'>
             <div className='mx-auto w-full h-3/4'>
