@@ -6,4 +6,4 @@ export default interface NetworkConfigInterface {
     generateContractUrl: (contractAddress: string) => string;
     generateTransactionUrl: (transactionAddress: string) => string;
   };
-};
+}

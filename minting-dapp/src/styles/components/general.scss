@@ -5,7 +5,7 @@ body {
   @apply font-sans;
 
   // Simple background with color gradient
-  @apply bg-gradient-to-b from-page-from_bg via-page-from_bg to-page-to_bg;
+  @apply bg-gradient-to-b from-slate-900 to-violet-900;
 
   // Fullscreen background image example
   //background-image: url('../../images/background.jpg');
