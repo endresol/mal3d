@@ -258,7 +258,7 @@ contract MoonApeLab3D is
         _matchedMint(_tokens, _merkleProof);
     }
 
-    // phase 5
+    // phase 6
     function partnerMint(
         uint256 _mintAmount,
         address _collection

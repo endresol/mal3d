@@ -64,6 +64,7 @@ const RandomMint: React.FC = () => {
 
         const tx = await mal3dContract.partnerMintDiscount(
           mintAmount,
+          minter.partnerCollection,
           passToken,
           props
         );
@@ -73,7 +74,11 @@ const RandomMint: React.FC = () => {
       } else {
         const totalprice = tokenPrice.mul(mintAmount);
         const props = { value: totalprice };
-        const tx = await mal3dContract.partnerMint(mintAmount, props);
+        const tx = await mal3dContract.partnerMint(
+          mintAmount,
+          minter.partnerCollection,
+          props
+        );
         toast.info(etherscanTransaction(tx.hash));
         await tx.wait();
         toast.success("Transaction completed");
