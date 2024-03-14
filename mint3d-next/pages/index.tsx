@@ -8,12 +8,14 @@ import { useWeb3Context } from "@/context";
 import { useDiscountCard } from "@/hooks/useDiscountCard";
 import { useMinterContext } from "@/hooks/useMinterContext";
 import { useContractContext } from "@/hooks/useContractContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Whitelist from "../helpers/whitelist";
 
 const Home: NextPage = () => {
   const { network, address } = useWeb3Context();
-  const { passDiscount, passToken } = useDiscountCard();
+  // const { passDiscount, passToken } = useDiscountCard();
+  // const { enter, setEnter } = useState(false);
+
   const {
     contract,
     isLoading: isContractLoading,
@@ -67,9 +69,16 @@ const Home: NextPage = () => {
   //     mounted = false;
   //   };
   // }, [useContractContext]);
+  if (!network)
+    return <div className='text-white'>Please connect your wallet.</div>;
 
-  if (network?.chainId != process.env.NEXT_PUBLIC_NETWORK_ID)
-    return <div className='text-white'>Wrong network</div>;
+  if (network.chainId.toString() != process.env.NEXT_PUBLIC_NETWORK_ID)
+    return (
+      <div className='text-white'>
+        Wrong network! <br /> Please switch to{" "}
+        {process.env.NEXT_PUBLIC_NETWORK_NAME}
+      </div>
+    );
 
   return (
     <>

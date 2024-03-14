@@ -25,12 +25,14 @@ export interface ContractContextData {
   contract: ContractData;
   isLoading: boolean;
   fetchContractData: () => void;
+  getDiscountedPrice: (discount: number) => BigNumber;
 }
 
 export const contractContextDefaultValues: ContractContextData = {
   contract: defaultState,
   isLoading: false,
   fetchContractData: () => null,
+  getDiscountedPrice: (price: number) => BigNumber.from(0),
 };
 
 export const ContractContext = createContext<ContractContextData>(
@@ -77,10 +79,16 @@ function useContractContextValue(): ContractContextData {
     }
   }, [setContract, MAL3dContract]);
 
+  function getDiscountedPrice(discount: number): BigNumber {
+    const _discountPrice = contract.price.mul(100 - discount).div(100);
+    return _discountPrice;
+  }
+
   return {
     contract,
     isLoading,
     fetchContractData,
+    getDiscountedPrice,
   };
 }
 

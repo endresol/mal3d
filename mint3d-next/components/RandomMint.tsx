@@ -18,7 +18,7 @@ import { etherscanTransaction } from "@/helpers/toasts";
 const RandomMint: React.FC = () => {
   const { address } = useWeb3Context();
   const { minter } = useMinterContext();
-  const { contract } = useContractContext();
+  const { contract, getDiscountedPrice } = useContractContext();
   const MAL3dContract = useMAL3dContract();
 
   const [canMint, setCanMint] = useState<boolean>(true);
@@ -47,13 +47,24 @@ const RandomMint: React.FC = () => {
   };
 
   const handleMint = async () => {
-    if (!mal3dContract) {
+    if (!mal3dContract || !minter) {
       toast.error("Contract not loaded. Reload page an try again.");
       return;
     }
-    if (passDiscount > 0) {
+    if (minter.discountCard && minter.discountCard.gt(0)) {
+      const discuntPrice = await getDiscountedPrice(minter?.discountPercent);
+      console.log("minting with discount", discuntPrice.toNumber());
+
       const totalprice = discountPrice.mul(mintAmount);
       const props = { value: totalprice };
+
+      console.log(
+        "minting with discount",
+        totalprice.toNumber(),
+        mintAmount,
+        passToken?.toNumber()
+      );
+
       const tx = await mal3dContract.mintDiscount(mintAmount, passToken, props);
       toast.info(etherscanTransaction(tx.hash));
       await tx.wait();
@@ -61,7 +72,10 @@ const RandomMint: React.FC = () => {
     } else {
       const totalprice = tokenPrice.mul(mintAmount);
       const props = { value: totalprice };
-      const hash = await mal3dContract.mint(mintAmount, props);
+      const tx = await mal3dContract.mint(mintAmount, props);
+      toast.info(etherscanTransaction(tx.hash));
+      await tx.wait();
+      toast.success("Transaction completed");
     }
   };
 
