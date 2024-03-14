@@ -83,7 +83,7 @@ contract MoonApeLab3D is
 
     mapping(uint256 => bool) public matchminted;
     string public uriPrefix =
-        "https://storage.moonapelab.io/static/monnape3d/metadata/";
+        "https://storage.moonapelab.io/static/moonapes3d/metadata/";
     string public uriSuffix = ".json";
     string public hiddenMetadataUri;
 
