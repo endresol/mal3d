@@ -51,31 +51,59 @@ const RandomMint: React.FC = () => {
       toast.error("Contract not loaded. Reload page an try again.");
       return;
     }
-    if (minter.discountCard && minter.discountCard.gt(0)) {
-      const discuntPrice = await getDiscountedPrice(minter?.discountPercent);
-      console.log("minting with discount", discuntPrice.toNumber());
 
-      const totalprice = discountPrice.mul(mintAmount);
-      const props = { value: totalprice };
+    if (contract.phase == 6) {
+      if (minter.discountCard && minter.discountCard.gt(0)) {
+        const discuntPrice = await getDiscountedPrice(minter?.discountPercent);
+        console.log("minting with discount", discuntPrice.toNumber());
 
-      console.log(
-        "minting with discount",
-        totalprice.toNumber(),
-        mintAmount,
-        passToken?.toNumber()
-      );
+        const totalprice = discountPrice.mul(mintAmount);
+        const props = { value: totalprice };
 
-      const tx = await mal3dContract.mintDiscount(mintAmount, passToken, props);
-      toast.info(etherscanTransaction(tx.hash));
-      await tx.wait();
-      toast.success("Transaction completed");
+        console.log("minting with discount", totalprice, mintAmount, passToken);
+
+        const tx = await mal3dContract.partnerMintDiscount(
+          mintAmount,
+          passToken,
+          props
+        );
+        toast.info(etherscanTransaction(tx.hash));
+        await tx.wait();
+        toast.success("Transaction completed");
+      } else {
+        const totalprice = tokenPrice.mul(mintAmount);
+        const props = { value: totalprice };
+        const tx = await mal3dContract.partnerMint(mintAmount, props);
+        toast.info(etherscanTransaction(tx.hash));
+        await tx.wait();
+        toast.success("Transaction completed");
+      }
     } else {
-      const totalprice = tokenPrice.mul(mintAmount);
-      const props = { value: totalprice };
-      const tx = await mal3dContract.mint(mintAmount, props);
-      toast.info(etherscanTransaction(tx.hash));
-      await tx.wait();
-      toast.success("Transaction completed");
+      if (minter.discountCard && minter.discountCard.gt(0)) {
+        const discuntPrice = await getDiscountedPrice(minter?.discountPercent);
+        console.log("minting with discount", discuntPrice.toNumber());
+
+        const totalprice = discountPrice.mul(mintAmount);
+        const props = { value: totalprice };
+
+        console.log("minting with discount", totalprice, mintAmount, passToken);
+
+        const tx = await mal3dContract.mintDiscount(
+          mintAmount,
+          passToken,
+          props
+        );
+        toast.info(etherscanTransaction(tx.hash));
+        await tx.wait();
+        toast.success("Transaction completed");
+      } else {
+        const totalprice = tokenPrice.mul(mintAmount);
+        const props = { value: totalprice };
+        const tx = await mal3dContract.mint(mintAmount, props);
+        toast.info(etherscanTransaction(tx.hash));
+        await tx.wait();
+        toast.success("Transaction completed");
+      }
     }
   };
 
