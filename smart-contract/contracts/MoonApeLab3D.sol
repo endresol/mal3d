@@ -82,7 +82,8 @@ contract MoonApeLab3D is
     mapping(address => uint256) public staffClaimed;
 
     mapping(uint256 => bool) public matchminted;
-    string public uriPrefix = "https://api.moonapelab.io/mal3d/";
+    string public uriPrefix =
+        "https://storage.moonapelab.io/static/monnape3d/metadata/";
     string public uriSuffix = ".json";
     string public hiddenMetadataUri;
 
@@ -160,16 +161,7 @@ contract MoonApeLab3D is
             _owner = IMoonStaking(MOONSTAKING2).ownerOf(GENESIS, _tokenId);
         }
 
-        if (
-            _msgSender() == _owner ||
-            IDelegateRegistry(DELEGATE_REGISTRY).checkDelegateForERC721(
-                _msgSender(),
-                _owner,
-                address(GENESIS),
-                _tokenId,
-                ""
-            )
-        ) {
+        if (_msgSender() == _owner) {
             return true;
         }
         return false;
@@ -179,16 +171,7 @@ contract MoonApeLab3D is
         uint256 _tokenId
     ) private view returns (bool) {
         address _owner = IERC721(MOONPASS).ownerOf(_tokenId);
-        if (
-            _msgSender() == _owner ||
-            IDelegateRegistry(DELEGATE_REGISTRY).checkDelegateForERC721(
-                _msgSender(),
-                _owner,
-                address(MOONPASS),
-                _tokenId,
-                ""
-            )
-        ) {
+        if (_msgSender() == _owner) {
             return true;
         }
         return false;
@@ -216,7 +199,7 @@ contract MoonApeLab3D is
             MerkleProof.verify(_merkleProof, merkleRoot, leaf),
             "Invalid proof!"
         );
-        _matchedMint(_tokens);
+        _matchedMint(_tokens, _merkleProof);
     }
 
     function matchedMintDicounted(
@@ -234,16 +217,18 @@ contract MoonApeLab3D is
             (mintPhase == 1 || mintPhase == 2),
             "Snapshot mint is not enabled!"
         );
+        _matchedMint(_tokens, _merkleProof);
+    }
 
+    function _matchedMint(
+        uint256[] memory _tokens,
+        bytes32[] calldata _merkleProof
+    ) private {
         bytes32 leaf = keccak256(abi.encodePacked(_msgSender()));
         require(
             MerkleProof.verify(_merkleProof, merkleRoot, leaf),
             "Invalid proof!"
         );
-        _matchedMint(_tokens);
-    }
-
-    function _matchedMint(uint256[] memory _tokens) private {
         for (uint256 i = 0; i < _tokens.length; i++) {
             _safeMint(_msgSender(), fakeNextToken(_tokens[i]));
             matchminted[_tokens[i]] = true;
@@ -257,7 +242,7 @@ contract MoonApeLab3D is
     ) public payable {
         require(mintPhase == 3, "The Abassador mint is not enabled!");
         require(!ambassadorClaimed[_msgSender()], "Address already claimed!");
-        matchedMint(_tokens, _merkleProof);
+        _matchedMint(_tokens, _merkleProof);
     }
 
     function walletLimitedMatchedMint(
@@ -270,7 +255,7 @@ contract MoonApeLab3D is
                 maxMintAmountPerWallet,
             "Limit reached!"
         );
-        matchedMint(_tokens, _merkleProof);
+        _matchedMint(_tokens, _merkleProof);
     }
 
     // phase 5
@@ -381,6 +366,11 @@ contract MoonApeLab3D is
 
     function getMintPhase() public view returns (uint256) {
         return mintPhase;
+    }
+
+    function isTokenMinted(uint256 _token) external view returns (bool) {
+        if (_exists(_token)) return true;
+        return false;
     }
 
     // ----- Admin Functions ------

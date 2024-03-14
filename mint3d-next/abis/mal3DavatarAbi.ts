@@ -204,6 +204,13 @@ export const mal3DavatarAbi = [
     type: "function",
   },
   {
+    inputs: [{ internalType: "uint256", name: "_token", type: "uint256" }],
+    name: "isTokenMinted",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       { internalType: "uint256[]", name: "_tokens", type: "uint256[]" },
       { internalType: "bytes32[]", name: "_merkleProof", type: "bytes32[]" },

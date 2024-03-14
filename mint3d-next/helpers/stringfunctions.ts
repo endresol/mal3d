@@ -12,7 +12,7 @@ export const getStatusFromPhase = (phase: number) => {
   } else if (phase === 4) {
     return "Team mint";
   } else if (phase === 5) {
-    return "Staff mint";
+    return "Founders mint";
   } else if (phase === 6) {
     return "Partner Collection mint";
   } else if (phase === 7) {
