@@ -88,37 +88,42 @@ const MintMatched: React.FC = () => {
 
     console.log("proof", proof);
 
-    if (passDiscount > 0 && mintPrice && mal3dContract) {
-      const totalprice = mintPrice
-        .mul(100 - passDiscount)
-        .div(100)
-        .mul(selectedApes.length);
-      console.log(
-        "discount price",
-        totalprice.toString(),
-        passToken?.toNumber()
-      );
-      console.log("apes", selectedApes);
-
-      const props = { value: totalprice };
-      const tx = await mal3dContract.matchedMintDicounted(
-        convertToBigNumber(selectedApes),
-        proof,
-        passToken,
-        props
-      );
-      toast.info(etherscanTransaction(tx.hash));
-      setSelectedApes([]);
-      await tx.wait();
-      toast.success("Transaction completed");
-    } else {
-      if (mintPrice && mal3dContract) {
-        const totalprice = mintPrice.mul(selectedApes.length);
+    if (mintPrice && mal3dContract) {
+      if (contract.phase == 3) {
+        const tx = await mal3dContract.transactionLimitedMatchedMint(
+          convertToBigNumber(selectedApes),
+          proof
+        );
+        toast.info(etherscanTransaction(tx.hash));
+        setSelectedApes([]);
+        await tx.wait();
+        toast.success("Transaction completed");
+      } else if (contract.phase == 4) {
+        const tx = await mal3dContract.transactionLimitedMatchedMint(
+          convertToBigNumber(selectedApes),
+          proof
+        );
+        toast.info(etherscanTransaction(tx.hash));
+        setSelectedApes([]);
+        await tx.wait();
+        toast.success("Transaction completed");
+      } else if (passDiscount > 0) {
+        const totalprice = mintPrice
+          .mul(100 - passDiscount)
+          .div(100)
+          .mul(selectedApes.length);
+        console.log(
+          "discount price",
+          totalprice.toString(),
+          passToken?.toNumber()
+        );
+        console.log("apes", selectedApes);
 
         const props = { value: totalprice };
-        const tx = await mal3dContract.matchedMint(
+        const tx = await mal3dContract.matchedMintDicounted(
           convertToBigNumber(selectedApes),
           proof,
+          passToken,
           props
         );
         toast.info(etherscanTransaction(tx.hash));
@@ -126,7 +131,22 @@ const MintMatched: React.FC = () => {
         await tx.wait();
         toast.success("Transaction completed");
       } else {
-        console.error("Serious error on mint");
+        if (mintPrice && mal3dContract) {
+          const totalprice = mintPrice.mul(selectedApes.length);
+
+          const props = { value: totalprice };
+          const tx = await mal3dContract.matchedMint(
+            convertToBigNumber(selectedApes),
+            proof,
+            props
+          );
+          toast.info(etherscanTransaction(tx.hash));
+          setSelectedApes([]);
+          await tx.wait();
+          toast.success("Transaction completed");
+        } else {
+          console.error("Serious error on mint");
+        }
       }
     }
   };

@@ -1,16 +1,5 @@
 export const mal3DavatarAbi = [
-  {
-    inputs: [
-      { internalType: "string", name: "_tokenName", type: "string" },
-      { internalType: "string", name: "_tokenSymbol", type: "string" },
-      { internalType: "uint256", name: "_cost", type: "uint256" },
-      { internalType: "uint256", name: "_maxSupply", type: "uint256" },
-      { internalType: "uint256", name: "_maxMintAmountPerTx", type: "uint256" },
-      { internalType: "string", name: "_hiddenMetadataUri", type: "string" },
-    ],
-    stateMutability: "nonpayable",
-    type: "constructor",
-  },
+  { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
     anonymous: false,
     inputs: [
@@ -205,36 +194,12 @@ export const mal3DavatarAbi = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "uint256", name: "_2dTokenId", type: "uint256" }],
-    name: "is2dMinted",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [
       { internalType: "address", name: "owner", type: "address" },
       { internalType: "address", name: "operator", type: "address" },
     ],
     name: "isApprovedForAll",
     outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      { internalType: "uint256[]", name: "_tokens", type: "uint256[]" },
-      { internalType: "bytes32[]", name: "_merkleProof", type: "bytes32[]" },
-    ],
-    name: "limitedMatchedMint",
-    outputs: [],
-    stateMutability: "payable",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    name: "match2dTo3d",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
@@ -260,8 +225,8 @@ export const mal3DavatarAbi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "matchedMintEnabled",
+    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    name: "matchminted",
     outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "view",
     type: "function",
@@ -315,16 +280,19 @@ export const mal3DavatarAbi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "mintPhase",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
+    inputs: [
+      { internalType: "uint256[]", name: "_tokens", type: "uint256[]" },
+      { internalType: "address", name: "_receiver", type: "address" },
+    ],
+    name: "mintMatchedForAddress",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
-    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    name: "mintedGenesis",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
+    inputs: [],
+    name: "mintPhase",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
@@ -351,13 +319,6 @@ export const mal3DavatarAbi = [
   },
   {
     inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "partnerClaimed",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "", type: "address" }],
     name: "partnerCollections",
     outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "view",
@@ -374,10 +335,14 @@ export const mal3DavatarAbi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "partnerMintEnabled",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "view",
+    inputs: [
+      { internalType: "uint256", name: "_mintAmount", type: "uint256" },
+      { internalType: "address", name: "_collection", type: "address" },
+      { internalType: "uint256", name: "_discountToken", type: "uint256" },
+    ],
+    name: "partnerMintDiscount",
+    outputs: [],
+    stateMutability: "payable",
     type: "function",
   },
   {
@@ -409,7 +374,7 @@ export const mal3DavatarAbi = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    inputs: [],
     name: "royalties",
     outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
@@ -425,13 +390,6 @@ export const mal3DavatarAbi = [
       { internalType: "address", name: "", type: "address" },
       { internalType: "uint256", name: "", type: "uint256" },
     ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    name: "royaltyLevels",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
     stateMutability: "view",
     type: "function",
   },
@@ -485,13 +443,6 @@ export const mal3DavatarAbi = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "bool", name: "_state", type: "bool" }],
-    name: "setMatchedMintEnabled",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [
       { internalType: "uint256", name: "_maxMintAmountPerTx", type: "uint256" },
     ],
@@ -516,13 +467,6 @@ export const mal3DavatarAbi = [
   {
     inputs: [{ internalType: "bytes32", name: "_merkleRoot", type: "bytes32" }],
     name: "setMerkleRoot",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "bool", name: "_state", type: "bool" }],
-    name: "setPartnerMintEnabled",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -610,6 +554,16 @@ export const mal3DavatarAbi = [
   },
   {
     inputs: [
+      { internalType: "uint256[]", name: "_tokens", type: "uint256[]" },
+      { internalType: "bytes32[]", name: "_merkleProof", type: "bytes32[]" },
+    ],
+    name: "transactionLimitedMatchedMint",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [
       { internalType: "address", name: "from", type: "address" },
       { internalType: "address", name: "to", type: "address" },
       { internalType: "uint256", name: "tokenId", type: "uint256" },
@@ -638,6 +592,16 @@ export const mal3DavatarAbi = [
     name: "uriSuffix",
     outputs: [{ internalType: "string", name: "", type: "string" }],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      { internalType: "uint256[]", name: "_tokens", type: "uint256[]" },
+      { internalType: "bytes32[]", name: "_merkleProof", type: "bytes32[]" },
+    ],
+    name: "walletLimitedMatchedMint",
+    outputs: [],
+    stateMutability: "payable",
     type: "function",
   },
   {
