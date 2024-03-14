@@ -18,7 +18,7 @@ export const useIs2DMinted = (tokenid: BigNumber) => {
 
     const getContractStatus = async () => {
       try {
-        const _mintStatus = await contract.is2dMinted(tokenid);
+        const _mintStatus = await contract.ownerOf(tokenid);
         setMintStatus(_mintStatus);
       } catch (err) {
         console.error("getContractStatus", err);
