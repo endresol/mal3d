@@ -62,7 +62,7 @@ contract MoonApeLab3D is
     using Strings for uint256;
 
     address public constant GENESIS =
-        0x8d10861Cd2BddE665110eAF12Dd0490215F30eE6;
+        0x0082F3387365e414512f06c4a587BbdC553c5049;
     address public constant MOONSTAKING =
         0xD78466a0F030Dd8D95CfFe33F867e436Ef5DC167;
     address public constant MOONSTAKING2 =
