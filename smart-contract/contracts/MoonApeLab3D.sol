@@ -8,7 +8,6 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/common/ERC2981.sol";
-import "./IDelegateRegistry.sol";
 import "./RandomlyAssigned.sol";
 
 interface IMoonStaking {
@@ -70,8 +69,6 @@ contract MoonApeLab3D is
         0x8d10861Cd2BddE665110eAF12Dd0490215F30eE6;
     address public constant MOONPASS =
         0x8344BE53FB250dd76E65B6721B6553C21053Ee8d;
-    address public constant DELEGATE_REGISTRY =
-        0x00000000000000447e69651d841bD8D104Bed493;
 
     mapping(address => bool) public partnerCollections; // partner collections
 
@@ -193,12 +190,6 @@ contract MoonApeLab3D is
             (mintPhase == 1 || mintPhase == 2 || mintPhase == 5),
             "Snapshot mint is not enabled!"
         );
-
-        bytes32 leaf = keccak256(abi.encodePacked(_msgSender()));
-        require(
-            MerkleProof.verify(_merkleProof, merkleRoot, leaf),
-            "Invalid proof!"
-        );
         _matchedMint(_tokens, _merkleProof);
     }
 
@@ -230,6 +221,10 @@ contract MoonApeLab3D is
             "Invalid proof!"
         );
         for (uint256 i = 0; i < _tokens.length; i++) {
+            require(
+                verifyMALOwnership(_tokens[i]),
+                "You are not the owner of this NFT!"
+            );
             _safeMint(_msgSender(), fakeNextToken(_tokens[i]));
             matchminted[_tokens[i]] = true;
         }
