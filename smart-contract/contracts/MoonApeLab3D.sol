@@ -99,7 +99,7 @@ contract MoonApeLab3D is
     mapping(uint256 => uint256) private discountLadder;
 
     constructor()
-        ERC721("MoonApeLab3D-Sepolia-1", "MAL3D-S1")
+        ERC721("MoonApeLab3D-Sepolia-2", "MAL3D-S2")
         RandomlyAssigned(106, 1)
     {
         setCost(5000000000000000);
@@ -243,6 +243,7 @@ contract MoonApeLab3D is
         require(mintPhase == 3, "The Abassador mint is not enabled!");
         require(!ambassadorClaimed[_msgSender()], "Address already claimed!");
         _matchedMint(_tokens, _merkleProof);
+        ambassadorClaimed[_msgSender()] = true;
     }
 
     function walletLimitedMatchedMint(
@@ -256,6 +257,9 @@ contract MoonApeLab3D is
             "Limit reached!"
         );
         _matchedMint(_tokens, _merkleProof);
+        staffClaimed[_msgSender()] =
+            staffClaimed[_msgSender()] +
+            _tokens.length;
     }
 
     // phase 6
@@ -270,10 +274,7 @@ contract MoonApeLab3D is
     {
         require(mintPhase == 6, "The partner mint is not enabled!");
         // require(!partnerClaimed[_msgSender()], "Address already claimed!"); // TODO Remove limit?
-        require(
-            !partnerCollections[_collection],
-            "Collection not whitelisted!"
-        );
+        require(partnerCollections[_collection], "Collection not whitelisted!");
 
         require(
             IERC721(_collection).balanceOf(_msgSender()) > 0,
@@ -296,10 +297,7 @@ contract MoonApeLab3D is
         mintPriceDiscountCompliance(_mintAmount, _discountToken)
     {
         require(mintPhase == 6, "The partner mint is not enabled!");
-        require(
-            !partnerCollections[_collection],
-            "Collection not whitelisted!"
-        );
+        require(partnerCollections[_collection], "Collection not whitelisted!");
 
         require(
             IERC721(_collection).balanceOf(_msgSender()) > 0,
