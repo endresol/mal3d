@@ -64,7 +64,7 @@ contract MoonApeLab3D is
     address public constant GENESIS =
         0x8d10861Cd2BddE665110eAF12Dd0490215F30eE6;
     address public constant MOONSTAKING =
-        0x8d10861Cd2BddE665110eAF12Dd0490215F30eE6;
+        0xD78466a0F030Dd8D95CfFe33F867e436Ef5DC167;
     address public constant MOONSTAKING2 =
         0x8d10861Cd2BddE665110eAF12Dd0490215F30eE6;
     address public constant MOONPASS =
