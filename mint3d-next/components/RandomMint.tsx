@@ -25,6 +25,8 @@ const RandomMint: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isPaused, setIsPaused] = useState<boolean>(true);
 
+  const GAS_LIMIT_PER: number = 200000;
+
   const [tokenPrice, setTokenPrice] = useState<BigNumber>(
     BigNumber.from("60000000000000000")
   );
@@ -58,7 +60,8 @@ const RandomMint: React.FC = () => {
         console.log("minting with discount", discuntPrice.toNumber());
 
         const totalprice = discountPrice.mul(mintAmount);
-        const props = { value: totalprice };
+        const totalgas = GAS_LIMIT_PER * mintAmount;
+        const props = { value: totalprice, gasLimit: totalgas };
 
         console.log("minting with discount", totalprice, mintAmount, passToken);
 
@@ -73,7 +76,9 @@ const RandomMint: React.FC = () => {
         toast.success("Transaction completed");
       } else {
         const totalprice = tokenPrice.mul(mintAmount);
-        const props = { value: totalprice };
+        const totalgas = GAS_LIMIT_PER * mintAmount;
+        const props = { value: totalprice, gasLimit: totalgas };
+
         const tx = await mal3dContract.partnerMint(
           mintAmount,
           minter.partnerCollection,
@@ -89,7 +94,8 @@ const RandomMint: React.FC = () => {
         console.log("minting with discount", discuntPrice.toNumber());
 
         const totalprice = discountPrice.mul(mintAmount);
-        const props = { value: totalprice };
+        const totalgas = GAS_LIMIT_PER * mintAmount;
+        const props = { value: totalprice, gasLimit: totalgas };
 
         console.log("minting with discount", totalprice, mintAmount, passToken);
 
@@ -103,7 +109,8 @@ const RandomMint: React.FC = () => {
         toast.success("Transaction completed");
       } else {
         const totalprice = tokenPrice.mul(mintAmount);
-        const props = { value: totalprice };
+        const totalgas = GAS_LIMIT_PER * mintAmount;
+        const props = { value: totalprice, gasLimit: totalgas };
         const tx = await mal3dContract.mint(mintAmount, props);
         toast.info(etherscanTransaction(tx.hash));
         await tx.wait();
