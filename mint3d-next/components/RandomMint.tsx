@@ -150,7 +150,7 @@ const RandomMint: React.FC = () => {
         Partner: {minter?.partnerCollection}
       </div>
       <div className=' text-yellow-100'>MerkleProof: {minter?.merkleProof}</div>
-      {minter?.canMint || contract.phase == 6 ? (
+      {minter?.canMint || contract.phase == 7 ? (
         <>
           <div className='container mx-auto max-w-sm bg-white border rounded-lg p-1'>
             <div className='mx-auto w-full h-3/4'>
