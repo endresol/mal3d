@@ -54,6 +54,9 @@ wallet 1: 0x1298150a0BeB2e7B2a50C83D656bBa79AAFD2F40
 wallet 2: 0xedd1F1DA23806c22DECcEF83D180BD0f98d3AB8B
 
 https://wanago.io/2020/09/28/react-context-api-hooks-typescript/
+https://betterprogramming.pub/designing-an-nft-smart-contract-for-flexible-minting-and-claiming-5b420a9a2d82
+
+https://docs.base.org/tools/network-faucets/
 
 "0x3B7025b9fd1F6C156de27DfD787776302cD522b7",
 "0x16312E45f94f437462AfE14e9700366bdd64C536",
