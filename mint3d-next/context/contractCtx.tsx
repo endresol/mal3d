@@ -57,7 +57,7 @@ function useContractContextValue(): ContractContextData {
       const allPromise = Promise.all([
         MAL3dContract.paused(),
         MAL3dContract.tokenCount(),
-        MAL3dContract.totalSupply(),
+        MAL3dContract.maxSupply(),
         MAL3dContract.maxMintAmountPerTx(),
         MAL3dContract.maxMintAmountPerWallet(),
         MAL3dContract.mintPhase(),
