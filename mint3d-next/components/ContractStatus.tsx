@@ -9,15 +9,6 @@ import DiscountCard from "./DiscountCard";
 import { useMinterContext } from "@/hooks/useMinterContext";
 import { useContractContext } from "@/hooks/useContractContext";
 
-// type ContractInfoObject = {
-//   isPause: boolean;
-//   tokenCount: number;
-//   maxMintTx: number;
-//   maxMintWallet: number;
-//   mintPhase: BigNumber;
-//   mintPrice: BigNumber;
-// };
-
 const ContractStatus: React.FC = () => {
   const { address } = useWeb3Context();
   const MAL3dContract = useMAL3dContract();
