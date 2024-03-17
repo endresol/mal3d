@@ -100,5 +100,11 @@
     "address": "0x34c4eba1966b502dfcf0868b6f271d85cc8a2312",
     "icon": "/partners/moonapelab.png",
     "holder": false
+  },
+  {
+    "name": "Cool Cats",
+    "address": "0xFa2f7083e8Af1bFFD08Ec5D02F37F5ca32C53768",
+    "icon": "/partners/moonapelab.png",
+    "holder": false
   }
 ]
