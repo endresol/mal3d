@@ -62,9 +62,9 @@ const RandomMint: React.FC = () => {
         console.log("minting with discount", discuntPrice.toNumber());
 
         const totalprice = discountPrice.mul(mintAmount);
-        const totalgas = GAS_LIMIT_PER * mintAmount;
-        const props = { value: totalprice, gasLimit: totalgas };
-
+        // const totalgas = GAS_LIMIT_PER * mintAmount;
+        // const props = { value: totalprice, gasLimit: totalgas };
+        const props = { value: totalprice };
         console.log("minting with discount", totalprice, mintAmount, passToken);
 
         const tx = await mal3dContract.partnerMintDiscount(
@@ -78,8 +78,9 @@ const RandomMint: React.FC = () => {
         toast.success("Transaction completed");
       } else {
         const totalprice = tokenPrice.mul(mintAmount);
-        const totalgas = GAS_LIMIT_PER * mintAmount;
-        const props = { value: totalprice, gasLimit: totalgas };
+        // const totalgas = GAS_LIMIT_PER * mintAmount;
+        // const props = { value: totalprice, gasLimit: totalgas };
+        const props = { value: totalprice };
 
         const tx = await mal3dContract.partnerMint(
           mintAmount,
@@ -96,8 +97,9 @@ const RandomMint: React.FC = () => {
         console.log("minting with discount", discuntPrice.toNumber());
 
         const totalprice = discountPrice.mul(mintAmount);
-        const totalgas = GAS_LIMIT_PER * mintAmount;
-        const props = { value: totalprice, gasLimit: totalgas };
+        // const totalgas = GAS_LIMIT_PER * mintAmount;
+        // const props = { value: totalprice, gasLimit: totalgas };
+        const props = { value: totalprice };
 
         console.log("minting with discount", totalprice, mintAmount, passToken);
 
@@ -111,8 +113,9 @@ const RandomMint: React.FC = () => {
         toast.success("Transaction completed");
       } else {
         const totalprice = tokenPrice.mul(mintAmount);
-        const totalgas = GAS_LIMIT_PER * mintAmount;
-        const props = { value: totalprice, gasLimit: totalgas };
+        // const totalgas = GAS_LIMIT_PER * mintAmount;
+        // const props = { value: totalprice, gasLimit: totalgas };
+        const props = { value: totalprice };
         const tx = await mal3dContract.mint(mintAmount, props);
         toast.info(etherscanTransaction(tx.hash));
         await tx.wait();
