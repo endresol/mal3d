@@ -168,8 +168,11 @@ const MintMatched: React.FC = () => {
   // // Fetch numbers from API
   useEffect(() => {
     async function fetchApiNumbers() {
-      const response = await fetch(`/api/ape_nft/${address}`);
+      const response = await fetch(
+        `https://game.moonapelab.io/api/ape_nft/${address}`
+      );
       const data = await response.json();
+      console.log("unstaked", data.nft_ids);
       setUnstakedApes(extractIntegers(data.nft_ids));
     }
     fetchApiNumbers();
