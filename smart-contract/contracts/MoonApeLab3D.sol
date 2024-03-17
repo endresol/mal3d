@@ -52,7 +52,7 @@ interface IMoonPass {
     ) external view returns (uint256);
 }
 
-contract MoonApeLab3D_OLD is
+contract MoonApeLab3D is
     ERC721,
     Ownable,
     ReentrancyGuard,
@@ -62,13 +62,13 @@ contract MoonApeLab3D_OLD is
     using Strings for uint256;
 
     address public constant GENESIS =
-        0x0082F3387365e414512f06c4a587BbdC553c5049;
+        0x34c4EBA1966B502dfCF0868b6f271d85CC8A2312;
     address public constant MOONSTAKING =
-        0xD78466a0F030Dd8D95CfFe33F867e436Ef5DC167;
+        0x00a103267A22971375C3C37d6E1f1BDfb548e946;
     address public constant MOONSTAKING2 =
-        0x8d10861Cd2BddE665110eAF12Dd0490215F30eE6;
+        0x34E391FdAE0965e4b0F85EA702572A13F6B5eBa2;
     address public constant MOONPASS =
-        0x8344BE53FB250dd76E65B6721B6553C21053Ee8d;
+        0xbBCCBD7BD5601232334CD64846e0cC64dFE37b4E;
 
     mapping(address => bool) public partnerCollections; // partner collections
 
@@ -96,10 +96,11 @@ contract MoonApeLab3D_OLD is
     mapping(uint256 => uint256) private discountLadder;
 
     constructor()
-        ERC721("MoonApeLab3D-Sepolia-2", "MAL3D-S2")
-        RandomlyAssigned(106, 1)
+        ERC721("Moon Ape Lab 3D", "MAL3D")
+        Ownable(_msgSender())
+        RandomlyAssigned(8000, 1)
     {
-        setCost(5000000000000000);
+        setCost(50000000000000000);
         setMaxMintAmountPerTx(10);
         setHiddenMetadataUri(
             "https://storage.moonapelab.io/static/moonapes3d/metadata/hidden.json"
@@ -362,7 +363,7 @@ contract MoonApeLab3D_OLD is
     }
 
     function isTokenMinted(uint256 _token) external view returns (bool) {
-        if (_exists(_token)) return true;
+        if (_ownerOf(_token) != address(0)) return true;
         return false;
     }
 
@@ -371,7 +372,10 @@ contract MoonApeLab3D_OLD is
     function tokenURI(
         uint256 _tokenId
     ) public view virtual override(ERC721) returns (string memory) {
-        require(_exists(_tokenId), "URI query for nonexistent token");
+        require(
+            _ownerOf(_tokenId) != address(0),
+            "URI query for nonexistent token"
+        );
 
         if (!matchminted[_tokenId] && revealed == false) {
             return hiddenMetadataUri;

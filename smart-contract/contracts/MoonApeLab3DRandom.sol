@@ -52,7 +52,12 @@ interface IMoonPass {
     ) external view returns (uint256);
 }
 
-contract MoonApeLab3D is ERC721AQueryable, Ownable, ReentrancyGuard, ERC2981 {
+contract MoonApeLab3DNewID is
+    ERC721AQueryable,
+    Ownable,
+    ReentrancyGuard,
+    ERC2981
+{
     using Strings for uint256;
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIdCounter;

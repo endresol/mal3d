@@ -83,6 +83,8 @@ const PartnerCollections: React.FC = () => {
     checkContract();
   }, [signer]);
 
+  console.log("partner", partners);
+
   return (
     <>
       <div className='text-white border-2 p-4 rounded-md shadow-md w-52'>
@@ -96,7 +98,7 @@ const PartnerCollections: React.FC = () => {
                 }`}
               >
                 <Image
-                  src={partner.icon}
+                  src={partner.icon.toString()}
                   height={200}
                   width={200}
                   alt='partner'
