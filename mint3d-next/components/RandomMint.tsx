@@ -190,6 +190,7 @@ const RandomMint: React.FC = () => {
                 <div className='flex justify-between mt-5'>
                   <AnimatedButton
                     handleClick={() => handleChangeMintAmount(-1)}
+                    isPaused={false}
                   >
                     -
                   </AnimatedButton>
@@ -198,13 +199,19 @@ const RandomMint: React.FC = () => {
                     <span className='text-xl font-bold'>{mintAmount}</span>
                   </div>
 
-                  <AnimatedButton handleClick={() => handleChangeMintAmount(1)}>
+                  <AnimatedButton
+                    handleClick={() => handleChangeMintAmount(1)}
+                    isPaused={false}
+                  >
                     +
                   </AnimatedButton>
                 </div>
               </div>
               <div>
-                <AnimatedButton handleClick={() => handleMint()}>
+                <AnimatedButton
+                  handleClick={() => handleMint()}
+                  isPaused={contract.paused}
+                >
                   Mint
                 </AnimatedButton>
               </div>
