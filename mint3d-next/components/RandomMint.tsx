@@ -21,6 +21,8 @@ const RandomMint: React.FC = () => {
   const { contract, getDiscountedPrice } = useContractContext();
   const MAL3dContract = useMAL3dContract();
 
+  const isSoldOut = contract?.tokenCount == contract?.totalSupply;
+
   const [canMint, setCanMint] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isPaused, setIsPaused] = useState<boolean>(true);
@@ -153,16 +155,18 @@ const RandomMint: React.FC = () => {
 
   return (
     <>
-      <div className=' text-yellow-100'>
+      <div className='hidden text-yellow-100'>
         Partner: {minter?.partnerCollection}
       </div>
-      <div className=' text-yellow-100'>MerkleProof: {minter?.merkleProof}</div>
+      <div className='hidden text-yellow-100'>
+        MerkleProof: {minter?.merkleProof}
+      </div>
       {minter?.canMint || contract.phase == 7 ? (
         <>
           <div className='container mx-auto max-w-sm bg-white border rounded-lg p-1'>
             <div className='mx-auto w-full h-3/4'>
               <Image
-                src='/moonie.gif'
+                src='/PANTS_ANIMATION_LOOP0001-0137.gif'
                 width='500'
                 height='500'
                 alt='Collection preview'
@@ -170,36 +174,42 @@ const RandomMint: React.FC = () => {
               />
             </div>
           </div>
-          <div className='text-white container mx-auto max-w-sm p-1'>
-            <div className='text-xl'>
-              <strong>Total price:</strong>{" "}
-              {ethers.utils.formatEther(
-                discountPrice
-                  ? discountPrice.mul(mintAmount)
-                  : tokenPrice.mul(mintAmount)
-              )}{" "}
-              ETH
-            </div>
+          {!isSoldOut && (
+            <>
+              <div className='text-white container mx-auto max-w-sm p-1'>
+                <div className='text-xl'>
+                  <strong>Total price:</strong>{" "}
+                  {ethers.utils.formatEther(
+                    discountPrice
+                      ? discountPrice.mul(mintAmount)
+                      : tokenPrice.mul(mintAmount)
+                  )}{" "}
+                  ETH
+                </div>
 
-            <div className='flex justify-between mt-5'>
-              <AnimatedButton handleClick={() => handleChangeMintAmount(-1)}>
-                -
-              </AnimatedButton>
-              {/* TODO : fix AniBtn to take children in and fix onclick */}
-              <div className='w-1/3'>
-                <span className='text-xl font-bold'>{mintAmount}</span>
+                <div className='flex justify-between mt-5'>
+                  <AnimatedButton
+                    handleClick={() => handleChangeMintAmount(-1)}
+                  >
+                    -
+                  </AnimatedButton>
+                  {/* TODO : fix AniBtn to take children in and fix onclick */}
+                  <div className='w-1/3'>
+                    <span className='text-xl font-bold'>{mintAmount}</span>
+                  </div>
+
+                  <AnimatedButton handleClick={() => handleChangeMintAmount(1)}>
+                    +
+                  </AnimatedButton>
+                </div>
               </div>
-
-              <AnimatedButton handleClick={() => handleChangeMintAmount(1)}>
-                +
-              </AnimatedButton>
-            </div>
-          </div>
-          <div>
-            <AnimatedButton handleClick={() => handleMint()}>
-              Mint
-            </AnimatedButton>
-          </div>
+              <div>
+                <AnimatedButton handleClick={() => handleMint()}>
+                  Mint
+                </AnimatedButton>
+              </div>
+            </>
+          )}
         </>
       ) : (
         <div className='border-2 p-4 rounded-md shadow-md text-white text-lg'>

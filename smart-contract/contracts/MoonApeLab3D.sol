@@ -52,7 +52,7 @@ interface IMoonPass {
     ) external view returns (uint256);
 }
 
-contract MoonApeLab3D is
+contract MoonApeLab3D_OLD is
     ERC721,
     Ownable,
     ReentrancyGuard,

@@ -10,17 +10,21 @@ interface ApeCardProps {
   isSelected: boolean;
 }
 
+const getImage = (id: number, isSelected: boolean, isMinted: boolean) => {
+  if (isMinted) return "/Bum-sq.jpg";
+  if (isSelected)
+    return `https://storage.moonapelab.io/static/moonapes3d/images/${id}.png`;
+  return `https://storage.moonapelab.io/static/moonapes/thumbs/${id}.png`;
+};
+
 const ApeCard: React.FC<ApeCardProps> = ({ id, onClick, isSelected }) => {
   const handleApeClick = (id: number) => {
-    // console.log("ape click", id, isMinted);
     if (!isMinted) {
       onClick(id);
     }
-    // onClick(id);
   };
 
   const isMinted = useIs2DMinted(BigNumber.from(id));
-  console.log("isminted:", isMinted);
 
   return (
     <div
@@ -30,20 +34,23 @@ const ApeCard: React.FC<ApeCardProps> = ({ id, onClick, isSelected }) => {
       }`}
     >
       <>
-        <Image
-          src={`https://storage.moonapelab.io/static/moonapes/thumbs/${id}.png`}
-          alt={`Moon Ape lag Geneis #${id}`}
-          width={300}
-          height={300}
-          className='rounded-lg'
-        />
-        {isMinted && (
-          <div className='absolute inset-0 flex items-center justify-center bg-black bg-opacity-75 rounded-lg'>
-            <div className='text-2xl text-white transform -rotate-45'>
-              MINTED
+        <div className='relative'>
+          {isMinted && (
+            <div className='absolute inset-0 flex items-center justify-center rounded-lg'>
+              <div className='text-2xl text-white transform'>MINTED</div>
             </div>
+          )}
+          <Image
+            src={getImage(id, isSelected, isMinted)}
+            alt={`Moon Ape lag Geneis #${id}`}
+            width={300}
+            height={300}
+            className='rounded-lg'
+          />
+          <div className='absolute bottom-0 left-0 w-full bg-white bg-opacity-75 text-black text-center py-1  font-mono font-bold'>
+            MAL #{id}
           </div>
-        )}
+        </div>
       </>
     </div>
   );

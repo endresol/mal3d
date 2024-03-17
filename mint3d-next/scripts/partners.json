@@ -1,0 +1,104 @@
+[
+  {
+    "name": "Wonders",
+    "address": "0x05f08b01971cf70bcd4e743a8906790cfb9a8fb8",
+    "icon": "/partners/wonders.png",
+    "holder": false
+  },
+  {
+    "name": "Lost Miners",
+    "address": "0x3bcacb18f4d60c8cba68cd95860daf3e32bebcb6",
+    "icon": "/partners/lostminer.png",
+    "holder": false
+  },
+  {
+    "name": "Barefoot Parrots",
+    "address": "0xe8000aadc7dfb66675dc36a0d6167615192f2601",
+    "icon": "/partners/barefootparrots.png",
+    "holder": false
+  },
+  {
+    "name": "Barefoot Pirates",
+    "address": "0x629e797b576a689581a14285a7ab2f144df30837",
+    "icon": "/partners/barefootpirates.svg",
+    "holder": false
+  },
+  {
+    "name": "Geeks",
+    "address": "0xd95be0e49472927adad417e5e62e2f087b8e210c",
+    "icon": "/partners/geeks.jpg",
+    "holder": false
+  },
+  {
+    "name": "Legendary Palms",
+    "address": "0x730151b8286ca0508a19a9d5c47fe91fdd9a6737",
+    "icon": "/partners/niftyisland.png",
+    "holder": false
+  },
+  {
+    "name": "Legendary Pistols",
+    "address": "0xf1026716ef967bdac62321d98eb8dea9943d3ca2",
+    "icon": "/partners/niftyisland.png",
+    "holder": false
+  },
+  {
+    "name": "Space Riders",
+    "address": "0xc9d198089d6c31d0ca5cc5b92c97a57a97bbfde2",
+    "icon": "/partners/spaceriders.png",
+    "holder": false
+  },
+  {
+    "name": "Visions of the Void",
+    "address": "0x5bc0f0911034d23c90c96945d9c072596ee64ed5",
+    "icon": "partners/visionsvoid.png",
+    "holder": false
+  },
+  {
+    "name": "Ape Reunion",
+    "address": "0x47f3a38990ca12e39255e959f7d97fbe5906afd4",
+    "icon": "/partners/ape_reunion.gif",
+    "holder": false
+  },
+  {
+    "name": "Reunion Species",
+    "address": "0x17dfcb96d8059b2e69029aaf054b685eb0853064",
+    "icon": "/partners/reunionspecies.jpg",
+    "holder": false
+  },
+  {
+    "name": "AKCB",
+    "address": "0x77372a4cc66063575b05b44481F059BE356964A4",
+    "icon": "/partners/akcb.png",
+    "holder": false
+  },
+  {
+    "name": "Toxic Skulls Club",
+    "address": "0x5ca8dd7f8e1ee6d0c27a7be6d9f33ef403fbcdd8",
+    "icon": "/partners/toxicskullclub.avif",
+    "holder": false
+  },
+  {
+    "name": "Savage Nation",
+    "address": "0x61e3d1c26802df805e9fc22dc26342e29ecfe860",
+    "icon": "/partners/savagenation.png",
+    "holder": false
+  },
+  {
+    "name": "Vora",
+    "address": "0xe6cec3553c9cee9ee160e35c8cb4c57d6e3cd1e7",
+    "icon": "/partners/vora.png",
+    "holder": false
+  },
+  {
+    "name": "FF4",
+    "address": "0xa1b91e06392777f6157da163ccebb110a33145d1",
+    "icon": "/partners/ff4.png",
+    "holder": false
+  },
+  {
+    "name": "Moon Ape Genesis",
+    "address": "0x34c4eba1966b502dfcf0868b6f271d85cc8a2312",
+    "icon": "/partners/moonapelab.png",
+    "holder": false
+  }
+]

@@ -9,6 +9,9 @@ import { useDiscountCard } from "@/hooks/useDiscountCard";
 import { useMinterContext } from "@/hooks/useMinterContext";
 import { useContractContext } from "@/hooks/useContractContext";
 import { useEffect, useState } from "react";
+
+import { BiError } from "react-icons/bi";
+
 import Whitelist from "../helpers/whitelist";
 
 const Home: NextPage = () => {
@@ -22,6 +25,8 @@ const Home: NextPage = () => {
     fetchContractData,
   } = useContractContext();
   const { minter, isLoading, fetchMinterData } = useMinterContext();
+
+  const isSoldOut = contract?.tokenCount == contract?.totalSupply;
 
   useEffect(() => {
     fetchMinterData();
@@ -79,6 +84,9 @@ const Home: NextPage = () => {
         {process.env.NEXT_PUBLIC_NETWORK_NAME}
       </div>
     );
+  if (isLoading || isContractLoading) {
+    return <div>LOADING</div>;
+  }
 
   return (
     <>
@@ -92,15 +100,15 @@ const Home: NextPage = () => {
             <ContractStatus />
           </div>
 
-          {(contract.phase == 0 || contract.paused) && (
-            <div className='w-10/12'>
-              <h2 className='text-xl'>Minting paused</h2>
-            </div>
-          )}
-          {/* have to alter this to test contract 5 here and 6 on partner is correct */}
           {contract?.phase <= 5 && (
             <>
               <div className='w-10/12 '>
+                {(contract.phase == 0 || contract.paused) && (
+                  <span className='text-3xl p-10 inline'>
+                    <BiError className='inline' /> Minting paused{" "}
+                    <BiError className='inline' />
+                  </span>
+                )}
                 <MatchedMint />
               </div>
             </>
@@ -113,8 +121,17 @@ const Home: NextPage = () => {
                   <PartnerCollections />
                 </div>
               )}
-              <div className='w-8/12 '>
+              <div className='w-8/12 relative'>
+                {(contract.phase == 0 || contract.paused) && (
+                  <h2 className='text-xl'>Minting paused</h2>
+                )}
+
                 <RandomMint />
+                {isSoldOut && (
+                  <div className='absolute bottom-1/8 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-yellow-500 text-white text-6xl font-bold py-2 px-4 rounded-full z-10'>
+                    SOLD OUT!
+                  </div>
+                )}
               </div>
             </>
           )}

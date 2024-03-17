@@ -3,14 +3,17 @@ import React from "react";
 interface AnimatedButtonProps {
   children: any;
   handleClick: () => any;
+  isPaused: boolean;
 }
 
 const AnimatedButton: React.FC<AnimatedButtonProps> = ({
   handleClick,
   children,
+  isPaused = false,
 }) => {
   return (
     <button
+      disabled={isPaused}
       className='relative inline-flex items-center justify-start px-6 py-3 overflow-hidden font-medium transition-all bg-transparent rounded hover:bg-white group border-2 text-white'
       onClick={() => handleClick()}
     >

@@ -5,41 +5,43 @@ import { ethers } from "ethers";
 import { useWeb3Context } from "../context";
 import { useMinterContext } from "../hooks/useMinterContext";
 
+import partnerList from "../scripts/partners.json";
+
 const ERC721ABI = [
   "function balanceOf(address owner) view returns (uint256)",
   // ...
 ];
 
-const partnerList = [
-  {
-    name: "Lost Miners",
-    icon: "/partners/lostminer.png",
-    real_address: "0x3bcacb18f4d60c8cba68cd95860daf3e32bebcb6",
-    address: "0xFa2f7083e8Af1bFFD08Ec5D02F37F5ca32C53768",
-    holder: false,
-  },
-  {
-    name: "Ape Reunion",
-    icon: "/partners/ape_reunion.gif",
-    real_address: "0x47f3a38990ca12e39255e959f7d97fbe5906afd4",
-    address: "0xe29f8038d1a3445ab22ad1373c65ec0a6e1161a4",
-    holder: false,
-  },
-  {
-    name: "Toxic Skull Club",
-    icon: "/partners/toxicskullclub.avif",
-    real_address: "0x5ca8dd7f8e1ee6d0c27a7be6d9f33ef403fbcdd8",
-    address: "0x5e28ab57d09c589ff5c7a2970d911178e97eab81",
-    holder: false,
-  },
-  {
-    name: "Space Riders",
-    icon: "/partners/spaceriders.png",
-    real_address: "0xc9d198089d6c31d0ca5cc5b92c97a57a97bbfde2",
-    address: "0xFa2f7083e8Af1bFFD08Ec5D02F37F5ca32C53768",
-    holder: false,
-  },
-];
+// const partnerList = [
+//   {
+//     name: "Lost Miners",
+//     icon: "/partners/lostminer.png",
+//     real_address: "0x3bcacb18f4d60c8cba68cd95860daf3e32bebcb6",
+//     address: "0xFa2f7083e8Af1bFFD08Ec5D02F37F5ca32C53768",
+//     holder: false,
+//   },
+//   {
+//     name: "Ape Reunion",
+//     icon: "/partners/ape_reunion.gif",
+//     real_address: "0x47f3a38990ca12e39255e959f7d97fbe5906afd4",
+//     address: "0xe29f8038d1a3445ab22ad1373c65ec0a6e1161a4",
+//     holder: false,
+//   },
+//   {
+//     name: "Toxic Skull Club",
+//     icon: "/partners/toxicskullclub.avif",
+//     real_address: "0x5ca8dd7f8e1ee6d0c27a7be6d9f33ef403fbcdd8",
+//     address: "0x5e28ab57d09c589ff5c7a2970d911178e97eab81",
+//     holder: false,
+//   },
+//   {
+//     name: "Space Riders",
+//     icon: "/partners/spaceriders.png",
+//     real_address: "0xc9d198089d6c31d0ca5cc5b92c97a57a97bbfde2",
+//     address: "0xFa2f7083e8Af1bFFD08Ec5D02F37F5ca32C53768",
+//     holder: false,
+//   },
+// ];
 
 const PartnerCollections: React.FC = () => {
   const [partners, setPartners] = useState(partnerList);
@@ -49,7 +51,6 @@ const PartnerCollections: React.FC = () => {
   const handlePartnerClick = (partner: {
     name?: string;
     icon?: string;
-    real_address?: string;
     address: any;
     holder: any;
   }) => {

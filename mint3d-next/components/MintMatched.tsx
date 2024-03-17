@@ -212,28 +212,39 @@ const MintMatched: React.FC = () => {
   console.log("minterCtx:", minter);
   return (
     <>
-      <div className='number-list grid grid-cols-6 gap-2'>
-        {[...stakedApes, ...unstakedApes].map((number) => (
-          <div key={number} className='number-card'>
-            <ApeCard
-              id={number}
-              isSelected={selectedApes.includes(number) ? true : false}
-              onClick={handleApeClick}
-            />
+      <div className='pl-5 pr-5'>
+        <div className='text-left'>
+          <h3 className='inline text-xl'>Your Moon Apes:</h3>(select the once
+          you want to mint)
+        </div>
+        <div className='number-list grid grid-cols-6 gap-2'>
+          {[...stakedApes, ...unstakedApes].map((number) => (
+            <div key={number} className='number-card'>
+              <ApeCard
+                id={number}
+                isSelected={selectedApes.includes(number) ? true : false}
+                onClick={handleApeClick}
+              />
+            </div>
+          ))}
+        </div>
+        {minter?.canMint ? (
+          <div className='mt-4 text-white'>
+            <div>Total mint price: {ethers.utils.formatEther(totalprice)}</div>
+            <AnimatedButton
+              handleClick={handleMintClick}
+              isPaused={contract.paused}
+            >
+              Mint
+            </AnimatedButton>
           </div>
-        ))}
+        ) : (
+          <div className='text-white font-bold text-xl tracking-wider'>
+            {" "}
+            Sorry; your address is not verified for mint
+          </div>
+        )}
       </div>
-      {minter?.canMint ? (
-        <div className='mt-4 text-white'>
-          <div>Total mint price: {ethers.utils.formatEther(totalprice)}</div>
-          <AnimatedButton handleClick={handleMintClick}>Mint</AnimatedButton>
-        </div>
-      ) : (
-        <div className='text-white font-bold text-xl tracking-wider'>
-          {" "}
-          Sorry; your address is not verified for mint
-        </div>
-      )}
     </>
   );
 };

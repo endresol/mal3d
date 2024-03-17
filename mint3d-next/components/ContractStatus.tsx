@@ -9,14 +9,14 @@ import DiscountCard from "./DiscountCard";
 import { useMinterContext } from "@/hooks/useMinterContext";
 import { useContractContext } from "@/hooks/useContractContext";
 
-type ContractInfoObject = {
-  isPause: boolean;
-  tokenCount: number;
-  maxMintTx: number;
-  maxMintWallet: number;
-  mintPhase: BigNumber;
-  mintPrice: BigNumber;
-};
+// type ContractInfoObject = {
+//   isPause: boolean;
+//   tokenCount: number;
+//   maxMintTx: number;
+//   maxMintWallet: number;
+//   mintPhase: BigNumber;
+//   mintPrice: BigNumber;
+// };
 
 const ContractStatus: React.FC = () => {
   const { address } = useWeb3Context();
@@ -114,7 +114,8 @@ const ContractStatus: React.FC = () => {
         <div>
           <div className=''>Supply</div>
           <div className='text-xl font-bold'>
-            {contract?.tokenCount?.toString()}/80(00)
+            {contract?.tokenCount?.toString()}/
+            {contract?.totalSupply.toString()}
           </div>
         </div>
 
