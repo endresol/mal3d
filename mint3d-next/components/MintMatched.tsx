@@ -119,7 +119,7 @@ const MintMatched: React.FC = () => {
       ) {
         console.log("inside phase 1-2-5");
 
-        if (passDiscount > 0 && contract.phase >= 2) {
+        if (passDiscount > 0 && contract.phase <= 2) {
           const totalprice = mintPrice
             .mul(100 - passDiscount)
             .div(100)
