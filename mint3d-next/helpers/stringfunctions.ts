@@ -4,9 +4,9 @@ export const getStatusFromPhase = (phase: number) => {
   if (phase === 0) {
     return "Closed";
   } else if (phase === 1) {
-    return "Snatshot I mint";
+    return "Snapshot I mint";
   } else if (phase === 2) {
-    return "Snatshot II mint";
+    return "Snapshot II mint";
   } else if (phase === 3) {
     return "Ambassador mint";
   } else if (phase === 4) {
