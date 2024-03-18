@@ -68,7 +68,6 @@ const PartnerCollections: React.FC = () => {
       );
 
       const balance = await partnerContract.balanceOf(address);
-      console.log("partner", partner.name, address, balance);
 
       if (balance.gt(0)) {
         partnerUpdate.push({ ...partner, holder: true });
@@ -82,8 +81,6 @@ const PartnerCollections: React.FC = () => {
   useEffect(() => {
     checkContract();
   }, [signer]);
-
-  console.log("partner", partners);
 
   return (
     <>

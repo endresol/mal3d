@@ -48,7 +48,6 @@ function useMinterContextValue(): MinterContextData {
   const { passDiscount, passToken } = useDiscountCard();
 
   const fetchMinterData = useCallback(() => {
-    console.log("fetchMinterData", address);
     if (!address) return;
 
     setIsLoading(true);
@@ -61,11 +60,9 @@ function useMinterContextValue(): MinterContextData {
 
     if (!proof) {
       const url = `https://api.delegate.xyz/registry/v2/${address}?chainId=${process.env.NEXT_PUBLIC_NETWORK_ID}`;
-      console.log("no proof", url);
       fetch(url)
         .then((response) => response.json())
         .then((fetchedDelegates) => {
-          console.log("delegate.xyz:", fetchedDelegates);
           const validDelegates = fetchedDelegates.filter(
             (delegate: { from: string | null | undefined }) => {
               // Check if the 'from' value is in the whitelist
@@ -98,7 +95,6 @@ function useMinterContextValue(): MinterContextData {
       delegateAddress: delegateAddress,
     };
     setMinter(data);
-    console.log("data:", data);
 
     setIsLoading(false);
   }, [setMinter, passDiscount, passToken]);

@@ -1,6 +1,4 @@
 export const getStatusFromPhase = (phase: number) => {
-  console.log("status phase", phase);
-
   if (phase === 0) {
     return "Closed";
   } else if (phase === 1) {

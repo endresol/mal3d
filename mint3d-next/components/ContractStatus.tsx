@@ -28,73 +28,9 @@ const ContractStatus: React.FC = () => {
     }
   }, [contract, minter]);
 
-  // const discountPrice = calculateDiscountPrice(
-  //   contract?.price,
-  //   minter?.discountPercent
-  // );
-
-  // const [contractInfo, setContractInfo] = useState<ContractInfoObject>();
-
   const [isSaleOpen, setIsSaleOpen] = useState<boolean>(true);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  // useEffect(() => {
-  //   console.log("effect", MAL3dContract, address);
-
-  //   if (!MAL3dContract) return;
-  //   let mounted = true;
-
-  //   const getContractStatus = async () => {
-  //     let contract = contractInfo;
-  //     try {
-  //       const allPromise = Promise.all([
-  //         MAL3dContract.paused(),
-  //         MAL3dContract.tokenCount(),
-  //         MAL3dContract.maxMintAmountPerTx(),
-  //         MAL3dContract.maxMintAmountPerWallet(),
-  //         MAL3dContract.mintPhase(),
-  //         MAL3dContract.cost(),
-  //       ]);
-
-  //       allPromise.then((values) => {
-  //         contract = {
-  //           isPause: values[0],
-  //           tokenCount: values[1],
-  //           maxMintTx: values[2],
-  //           maxMintWallet: values[3],
-  //           mintPhase: values[4],
-  //           mintPrice: values[5],
-  //         };
-  //         setContractInfo((prev) => contract);
-
-  //         console.log("is Paused", contract.isPause);
-
-  //         setIsSaleOpen(values[4] > 0 && values[1] < 8000);
-  //         console.log("open?", isSaleOpen);
-
-  //         const _discountPrice = values[5]
-  //           .mul(100 - (minter ? minter.discountPercent : 0))
-  //           .div(100);
-  //         setDiscountPrice(_discountPrice);
-
-  //         console.log("discountPrice in useEffect", discountPrice.toString());
-  //       });
-  //     } catch (err) {
-  //       console.error("getContractStatus", err);
-  //     }
-  //   };
-
-  //   if (mounted) {
-  //     getContractStatus().then(() => {
-  //       setIsLoading(false);
-  //     });
-  //   }
-
-  //   return () => {
-  //     mounted = false;
-  //   };
-  // }, [address, MAL3dContract, minter]);
 
   if (isLoading)
     return <div className='text-lg font-medium text-white'> Loading ... </div>;

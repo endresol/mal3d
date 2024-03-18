@@ -83,16 +83,10 @@ const MintMatched: React.FC = () => {
       return;
     }
 
-    console.log("handleMintClick", selectedApes);
     const proof = Whitelist.getProofForAddress(address);
 
-    console.log("proof", proof);
-
     if (mintPrice && mal3dContract) {
-      console.log("phase is", contract.phase);
-
       if (contract.phase == 3) {
-        console.log("inside phase 3");
         const tx = await mal3dContract.transactionLimitedMatchedMint(
           convertToBigNumber(selectedApes),
           proof
@@ -102,8 +96,6 @@ const MintMatched: React.FC = () => {
         await tx.wait();
         toast.success("Transaction completed");
       } else if (contract.phase == 4) {
-        console.log("inside phase 4");
-
         const tx = await mal3dContract.walletLimitedMatchedMint(
           convertToBigNumber(selectedApes),
           proof
@@ -117,19 +109,11 @@ const MintMatched: React.FC = () => {
         contract.phase == 2 ||
         contract.phase == 5
       ) {
-        console.log("inside phase 1-2-5");
-
         if (passDiscount > 0 && contract.phase <= 2) {
           const totalprice = mintPrice
             .mul(100 - passDiscount)
             .div(100)
             .mul(selectedApes.length);
-          console.log(
-            "discount price",
-            totalprice.toString(),
-            passToken?.toNumber()
-          );
-          console.log("apes", selectedApes);
 
           const props = { value: totalprice };
           const tx = await mal3dContract.matchedMintDicounted(
@@ -144,24 +128,34 @@ const MintMatched: React.FC = () => {
           toast.success("Transaction completed");
         } else {
           if (mintPrice && mal3dContract) {
-            const totalprice = mintPrice.mul(selectedApes.length);
-
-            const props = { value: totalprice };
-            const tx = await mal3dContract.matchedMint(
-              convertToBigNumber(selectedApes),
-              proof,
-              props
-            );
-            toast.info(etherscanTransaction(tx.hash));
-            setSelectedApes([]);
-            await tx.wait();
-            toast.success("Transaction completed");
+            try {
+              const totalprice = mintPrice.mul(selectedApes.length);
+              const props = { value: totalprice };
+              const tx = await mal3dContract.matchedMint(
+                convertToBigNumber(selectedApes),
+                proof,
+                props
+              );
+              if (tx) {
+              }
+              toast.info(etherscanTransaction(tx.hash));
+              setSelectedApes([]);
+              await tx.wait();
+              toast.success("Transaction completed");
+            } catch (error: any) {
+              if (error.code === "INSUFFICIENT_FUNDS") {
+                toast.error("Looks like your wallet don't have enough eth");
+              } else {
+                toast.error(
+                  "Transaction failed for some reason - please let us know"
+                );
+              }
+            }
           } else {
             console.error("Serious error on mint");
           }
         }
       }
-      console.log("after");
     }
   };
 
@@ -170,7 +164,6 @@ const MintMatched: React.FC = () => {
     async function fetchApiNumbers() {
       const response = await fetch(`/api/ape_nft/${address}`);
       const data = await response.json();
-      console.log("unstaked", data.nft_ids);
       setUnstakedApes(extractIntegers(data.nft_ids));
     }
     fetchApiNumbers();
@@ -184,7 +177,6 @@ const MintMatched: React.FC = () => {
     const getContractData = async () => {
       try {
         const stakedNFTs = await malStakingContract.getStakerNFT(address);
-        console.log("getting staked nfts", stakedNFTs);
 
         const allstaked = stakedNFTs[0].concat(stakedNFTs[3]);
         setStakedApes(extractIntegers(allstaked));
@@ -210,7 +202,6 @@ const MintMatched: React.FC = () => {
     };
   }, [address, malStakingContract, mal3dContract]);
 
-  console.log("minterCtx:", minter);
   return (
     <>
       <div className='pl-5 pr-5'>

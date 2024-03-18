@@ -97,7 +97,8 @@ contract MoonApeLab3D is
 
     constructor()
         ERC721("Moon Ape Lab 3D", "MAL3D")
-        Ownable(_msgSender())
+        // Ownable(_msgSender()) // with or without value... don't know
+        Ownable()
         RandomlyAssigned(8000, 1)
     {
         setCost(50000000000000000);

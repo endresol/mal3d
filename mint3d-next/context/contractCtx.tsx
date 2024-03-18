@@ -47,8 +47,6 @@ function useContractContextValue(): ContractContextData {
   const MAL3dContract = useMAL3dContract();
 
   const fetchContractData = useCallback(() => {
-    console.log("fectchContractData");
-
     if (!MAL3dContract) return;
     setIsLoading(true);
 

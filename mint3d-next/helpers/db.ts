@@ -18,7 +18,6 @@ export default async function executeQuery({
 
   try {
     const [rows, fields] = await db.execute(query, values);
-    console.log("db: ", rows);
     await db.end();
     return rows;
   } catch (error) {

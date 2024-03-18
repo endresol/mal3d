@@ -20,7 +20,6 @@ export const useDiscountCard = () => {
 
     if (!contract) return;
     let mounted = true;
-    console.log("inside hook useDiscountCard");
 
     const getContractStatus = async () => {
       try {
@@ -50,9 +49,7 @@ export const useDiscountCard = () => {
     };
 
     if (mounted) {
-      getContractStatus().then(() => {
-        console.log("all done...");
-      });
+      getContractStatus().then(() => {});
     }
 
     return () => {

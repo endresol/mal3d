@@ -28,7 +28,6 @@ const FileEditor: React.FC<FileEditorProps> = ({
     axios
       .post("/api/file", { content })
       .then((response) => {
-        console.log(response.data.message);
         parentAction();
       })
       .catch((error) => {
