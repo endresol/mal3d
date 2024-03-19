@@ -22,7 +22,12 @@ const DiscountCard: React.FC<IDiscountCardProps> = ({ value }) => {
         <div>No Discount</div>
         <div className='relative'>
           <GoQuestion id='noDiscountIcon' />
-          <Tooltip anchorSelect='#noDiscountIcon' clickable place='right'>
+          <Tooltip
+            anchorSelect='#noDiscountIcon'
+            clickable
+            place='right'
+            style={{ zIndex: 99 }}
+          >
             <>
               <div className='w-52'>
                 <h3>Moon Pass Discount</h3>

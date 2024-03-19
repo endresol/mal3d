@@ -11,9 +11,10 @@ interface ApeCardProps {
 }
 
 const getImage = (id: number, isSelected: boolean, isMinted: boolean) => {
-  if (isMinted) return "/Bum-sq.jpg";
+  if (isMinted)
+    return "https://storage.moonapelab.io/static/mintsite/Bum-sq.jpg";
   if (isSelected)
-    return `https://storage.moonapelab.io/static/moonapes3d/images/${id}.png`;
+    return `https://storage.moonapelab.io/static/moonapes3d/thumbs/${id}.png`;
   return `https://storage.moonapelab.io/static/moonapes/thumbs/${id}.png`;
 };
 
