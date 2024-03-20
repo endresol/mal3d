@@ -205,8 +205,14 @@ const MintMatched: React.FC = () => {
   return (
     <>
       <div className='pl-5 pr-5'>
+        {contract.phase == 3 && (
+          <div className='text-left text-xl'>
+            This mint is limited to ONE TRANSACTION per wallet. You can mint up
+            to THREE avatars, but you must mint in a single transaction.
+          </div>
+        )}
         <div className='text-left'>
-          <h3 className='inline text-xl'>Your Moon Apes:</h3>(select the once
+          <h3 className='inline text-2xl'>Your Moon Apes:</h3>(select the once
           you want to mint)
         </div>
         <div className='number-list grid grid-cols-6 gap-2'>
