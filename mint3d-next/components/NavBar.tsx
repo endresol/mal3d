@@ -26,6 +26,18 @@ export function NavBar() {
         Moon Ape Lab 3d mint
       </h1>
       <div className='relative flex items-center'>
+        <a target='_blank' href='https://raritysniper.com/nft-drops-calendar'>
+          <Image
+            src={
+              "https://storage.moonapelab.io/static/mintsite/logo2-white.png"
+            }
+            height={35}
+            width={125}
+            alt='RaritySniper'
+            loading='lazy'
+            className='pr-5'
+          />
+        </a>
         <a href='https://www.walletguard.app/' target='_blank' className='mr-4'>
           <Image
             src={"/wallet-guard-logo.png"}
