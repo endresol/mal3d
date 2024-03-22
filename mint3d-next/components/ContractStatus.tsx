@@ -68,7 +68,7 @@ const ContractStatus: React.FC = () => {
               <div className='text-sm font-medium'>
                 {`${contract?.maxPerTx} per transaction`}
                 <br />
-                {`${contract?.maxPerWallet} per wallet`}
+                {/* {`${contract?.maxPerWallet} per wallet`} */}
               </div>
             </div>
             <div>
