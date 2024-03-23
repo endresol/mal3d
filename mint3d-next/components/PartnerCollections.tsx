@@ -88,7 +88,7 @@ const PartnerCollections: React.FC = () => {
 
   return (
     <>
-      <div className='text-white border-2 p-4 rounded-md shadow-md w-80'>
+      <div className='text-white border-2 p-4 rounded-md shadow-md w-72'>
         <h2 className='text-xl'>Partner Collections</h2>
         <ul className='grid grid-cols-3 gap-2'>
           {partners.map((partner, index) => (
