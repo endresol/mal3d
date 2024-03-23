@@ -117,11 +117,11 @@ const Home: NextPage = () => {
           {contract?.phase >= 6 && (
             <>
               {contract?.phase == 6 && (
-                <div className='w-2/12'>
+                <div className='w-4/12'>
                   <PartnerCollections />
                 </div>
               )}
-              <div className='w-8/12 relative'>
+              <div className='w-6/12 relative'>
                 {(contract.phase == 0 || contract.paused) && (
                   <h2 className='text-xl'>Minting paused</h2>
                 )}

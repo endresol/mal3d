@@ -67,12 +67,16 @@ const PartnerCollections: React.FC = () => {
         signer
       );
 
-      const balance = await partnerContract.balanceOf(address);
+      try {
+        const balance = await partnerContract.balanceOf(address);
 
-      if (balance.gt(0)) {
-        partnerUpdate.push({ ...partner, holder: true });
-      } else {
-        partnerUpdate.push({ ...partner });
+        if (balance.gt(0)) {
+          partnerUpdate.push({ ...partner, holder: true });
+        } else {
+          partnerUpdate.push({ ...partner });
+        }
+      } catch (error) {
+        console.error("Error checking", partner.name, partner.address);
       }
     }
     setPartners(partnerUpdate);
@@ -84,9 +88,9 @@ const PartnerCollections: React.FC = () => {
 
   return (
     <>
-      <div className='text-white border-2 p-4 rounded-md shadow-md w-52'>
+      <div className='text-white border-2 p-4 rounded-md shadow-md w-80'>
         <h2 className='text-xl'>Partner Collections</h2>
-        <ul className='grid grid-cols-2 gap-2'>
+        <ul className='grid grid-cols-3 gap-2'>
           {partners.map((partner, index) => (
             <li key={index}>
               <div

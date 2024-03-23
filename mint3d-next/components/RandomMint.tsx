@@ -55,6 +55,10 @@ const RandomMint: React.FC = () => {
       toast.error("Contract not loaded. Reload page an try again.");
       return;
     }
+    if (mintAmount < 1) {
+      toast.info("You have to mint at least one to get onboard!");
+      return;
+    }
 
     if (contract.phase == 6) {
       if (minter.discountCard && minter.discountCard.gt(0)) {
@@ -219,7 +223,7 @@ const RandomMint: React.FC = () => {
             </>
           ) : (
             <>
-              You are not included in the <strong>whitelist</strong>.
+              Welcome to the partner flight!
               <br />
               If you hold a token/NFT in any our partner collections listed to
               the left, a green circle should indicate this. Please select the
@@ -227,7 +231,7 @@ const RandomMint: React.FC = () => {
             </>
           )}
           <br />
-          Please come back during the next phase!
+          If no green circle apare, please come back tomorrow for public mint.
         </div>
       )}
     </>
