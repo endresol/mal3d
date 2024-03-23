@@ -223,15 +223,16 @@ const RandomMint: React.FC = () => {
             </>
           ) : (
             <>
-              Welcome to the partner flight!
+              Welcome to the Partner Flight!
               <br />
-              If you hold a token/NFT in any our partner collections listed to
-              the left, a green circle should indicate this. Please select the
-              partner collections you want to be associated with for this mint.
+              If you hold an NFT in any of our partner collections listed on the
+              left, a green circle should indicate this. Please select the
+              partner collection you want to be associated with.
+              <br />
+              If no green circle appears, please come back tomorrow for the
+              Public Sale
             </>
           )}
-          <br />
-          If no green circle apare, please come back tomorrow for public mint.
         </div>
       )}
     </>
