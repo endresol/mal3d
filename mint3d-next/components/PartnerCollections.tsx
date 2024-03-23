@@ -94,7 +94,7 @@ const PartnerCollections: React.FC = () => {
           {partners.map((partner, index) => (
             <li key={index}>
               <div
-                className={`mt-2 border-4 rounded-full overflow-hidden ${
+                className={`mt-2 border-4 rounded-full overflow-hidden w-24 h-24 ${
                   partner.holder ? "border-green-500" : "border-slate-500"
                 }`}
               >
@@ -105,7 +105,7 @@ const PartnerCollections: React.FC = () => {
                   alt='partner'
                   className={`${
                     partner.holder ? "" : "grayscale"
-                  } object-cover h-20 w-20`}
+                  } object-cover h-24 w-24`}
                   onClick={() => handlePartnerClick(partner)}
                 />
               </div>
