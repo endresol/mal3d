@@ -98,23 +98,42 @@ const RandomMint: React.FC = () => {
         const totalprice = discountPrice.mul(mintAmount);
         const totalgas = GAS_LIMIT_PER * mintAmount;
         const props = { value: totalprice, gasLimit: totalgas };
-
-        const tx = await mal3dContract.mintDiscount(
-          mintAmount,
-          passToken,
-          props
-        );
-        toast.info(etherscanTransaction(tx.hash));
-        await tx.wait();
-        toast.success("Transaction completed");
+        try {
+          const tx = await mal3dContract.mintDiscount(
+            mintAmount,
+            passToken,
+            props
+          );
+          toast.info(etherscanTransaction(tx.hash));
+          await tx.wait();
+          toast.success("Transaction completed");
+        } catch (error: any) {
+          if (error.code === "INSUFFICIENT_FUNDS") {
+            toast.error("Looks like your wallet don't have enough eth");
+          } else {
+            toast.error(
+              "Transaction failed for some reason - please let us know"
+            );
+          }
+        }
       } else {
         const totalprice = tokenPrice.mul(mintAmount);
         const totalgas = GAS_LIMIT_PER * mintAmount;
         const props = { value: totalprice, gasLimit: totalgas };
-        const tx = await mal3dContract.mint(mintAmount, props);
-        toast.info(etherscanTransaction(tx.hash));
-        await tx.wait();
-        toast.success("Transaction completed");
+        try {
+          const tx = await mal3dContract.mint(mintAmount, props);
+          toast.info(etherscanTransaction(tx.hash));
+          await tx.wait();
+          toast.success("Transaction completed");
+        } catch (error: any) {
+          if (error.code === "INSUFFICIENT_FUNDS") {
+            toast.error("Looks like your wallet don't have enough eth");
+          } else {
+            toast.error(
+              "Transaction failed for some reason - please let us know"
+            );
+          }
+        }
       }
     }
   };
