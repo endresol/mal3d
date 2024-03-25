@@ -92,8 +92,8 @@ const Home: NextPage = () => {
     <>
       <div className=''>
         <Head>
-          <title>Moon Ape Lab</title>
-          <link rel='icon' href='favicon.png' />
+          <title>Moon Ape Lab 3D Avatar Mint</title>
+          <link rel='icon' href='/favicon.ico' sizes='any' />
         </Head>
         <div className='flex flex-row flex-1 gap-2 mt-4 text-white'>
           <div className='w-2/12'>

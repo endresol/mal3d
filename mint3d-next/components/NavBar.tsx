@@ -23,7 +23,7 @@ export function NavBar() {
         </Link>
       </div>
       <h1 className='text-white font-bold text-4xl mb-2'>
-        Moon Ape Lab 3d mint
+        Moon Ape Lab 3d Mint
       </h1>
       <div className='relative flex items-center'>
         <a target='_blank' href='https://raritysniper.com/nft-drops-calendar'>
