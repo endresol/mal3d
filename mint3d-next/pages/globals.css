@@ -69,6 +69,14 @@
   padding: 1.5rem;
 }
 
+.nowallet {
+  background-image: url("/moonapes-1.jpeg");
+  background-size: contain;
+  height: 75vh;
+  font-size: 3rem;;
+}
+
+
 @keyframes rotate {
   from {
     transform: translate(-50%, -50%) scale(1.4) rotate(0turn);

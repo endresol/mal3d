@@ -75,11 +75,11 @@ const Home: NextPage = () => {
   //   };
   // }, [useContractContext]);
   if (!network)
-    return <div className='text-white'>Please connect your wallet.</div>;
+    return <div className='text-white nowallet'>Please connect your wallet.</div>;
 
   if (network.chainId.toString() != process.env.NEXT_PUBLIC_NETWORK_ID)
     return (
-      <div className='text-white'>
+      <div className='text-white nowallet'>
         Wrong network! <br /> Please switch to{" "}
         {process.env.NEXT_PUBLIC_NETWORK_NAME}
       </div>
