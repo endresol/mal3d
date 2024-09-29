@@ -72,6 +72,8 @@
 .nowallet {
   background-image: url("/moonapes-1.jpeg");
   background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
   height: 75vh;
   font-size: 3rem;;
 }
