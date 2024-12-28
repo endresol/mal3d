@@ -17,7 +17,7 @@ const providerOptions = {
     options: {
       infuraId: process.env.NEXT_PUBLIC_INFURA_ID,
     },
-  },
+  }
 };
 
 let web3Modal: Web3Modal | null;
