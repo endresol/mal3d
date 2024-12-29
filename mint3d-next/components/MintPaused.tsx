@@ -2,17 +2,14 @@ import Image from "next/image";
 
 const MintPaused = () => {
   return (
-    <div className="flex flex-col items-center justify-center gap-6 p-8">
+    <div className="flex flex-col items-center justify-center gap-2 p-2">
       <Image
-        src="/paused-mint.webp"
+        src="/7403_mint_paused_12_28_2024.png"
         alt="Minting Paused"
-        width={400}
-        height={400}
+        width={1000}
+        height={1000}
         className="opacity-80"
       />
-      <h1 className="text-4xl md:text-6xl font-bold text-center text-white ">
-        Minting Paused
-      </h1>
     </div>
   );
 };

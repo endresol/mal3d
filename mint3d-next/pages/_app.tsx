@@ -19,9 +19,9 @@ import { ClerkProvider } from "@clerk/nextjs";
   return Number(this);
 };
 
-const fontPatrickHand = localFont({
-  src: "../fonts/PatrickHand-Regular.ttf",
-  variable: "--font-patrick-hand",
+const fontForMAL = localFont({
+  src: "../fonts/SpaceGrotesk-VariableFont_wght.ttf",
+  variable: "--font-for-mal",
 });
 
 function myApp({ Component, pageProps }: AppProps) {
@@ -30,18 +30,18 @@ function myApp({ Component, pageProps }: AppProps) {
       <ClerkProvider {...pageProps}>
         <style jsx global>{`
           html {
-            font-family: ${fontPatrickHand.style.fontFamily};
+            font-family: ${fontForMAL.style.fontFamily};
           }
         `}</style>
         {process.env.NEXT_PUBLIC_NETWORK_ID !== "1" && (
-          <div className='h-6 bg-red-500 text-center'>
+          <div className="h-6 bg-red-500 text-center">
             {" "}
             {process.env.NEXT_PUBLIC_NETWORK_NAME}{" "}
           </div>
         )}
         <Web3ContextProvider>
           <div
-            className={`flex flex-col h-full font-family: ${fontPatrickHand.style.fontFamily} font-sans`}
+            className={`flex flex-col h-full font-family: ${fontForMAL.style.fontFamily} font-sans`}
           >
             <ContractContextProvider>
               <MinterContextProvider>
@@ -49,10 +49,10 @@ function myApp({ Component, pageProps }: AppProps) {
                 <Component {...pageProps} />
                 <ToastContainer
                   hideProgressBar={false}
-                  position='bottom-right'
+                  position="bottom-right"
                   autoClose={5000}
                   pauseOnHover
-                  theme='dark'
+                  theme="dark"
                   closeOnClick
                 />
               </MinterContextProvider>

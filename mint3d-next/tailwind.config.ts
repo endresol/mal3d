@@ -10,7 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-patrick-hand)", ...defaultTheme.fontFamily.sans],
+        sans: ["var(--font-for-mal)", ...defaultTheme.fontFamily.sans],
       },
     },
   },
