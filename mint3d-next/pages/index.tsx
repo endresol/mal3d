@@ -76,7 +76,7 @@ const Home: NextPage = () => {
   //     mounted = false;
   //   };
   // }, [useContractContext]);
-  if (isPaused)
+  if (isPaused == "true")
     return (
       <div className="flex flex-col items-center justify-center">
         <MintPaused />
