@@ -84,7 +84,9 @@ const Home: NextPage = () => {
     );
   if (!network)
     return (
-      <div className="text-white nowallet">Please connect your wallet.</div>
+      <div className="text-white nowallet flex flex-col items-center justify-end">
+        <p className="align-bottom text-2xl">Please connect your wallet</p>
+      </div>
     );
 
   if (network.chainId.toString() != process.env.NEXT_PUBLIC_NETWORK_ID)
