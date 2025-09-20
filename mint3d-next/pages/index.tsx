@@ -85,7 +85,9 @@ const Home: NextPage = () => {
   if (!network)
     return (
       <div className="text-white nowallet flex flex-col items-center justify-end">
-        <p className="align-bottom text-2xl">Please connect your wallet</p>
+        <p className="align-bottom text-2xl uppercase">
+          Please connect your wallet
+        </p>
       </div>
     );
 

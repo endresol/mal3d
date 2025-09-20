@@ -5,7 +5,7 @@ import { Web3Button } from "../components";
 
 export function NavBar() {
   return (
-    <header className="flex justify-between items-center">
+    <header className="flex flex-col sm:flex-row justify-between items-center">
       <div className="relative flex items-center">
         <Image
           src="/MAL_LOGO.svg"
@@ -22,7 +22,7 @@ export function NavBar() {
           WEBSITE
         </Link>
       </div>
-      <h1 className="text-white font-bold text-4xl mb-2">
+      <h1 className="text-white font-bold text-xl lg:text-4xl mb-2 uppercase ">
         Moon Ape Lab 3D Mint
       </h1>
       <div className="relative flex items-center">
