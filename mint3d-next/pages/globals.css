@@ -69,11 +69,12 @@
 }
 
 .nowallet {
-  background-image: url("/moonapes-1.jpeg");
+  background-image: url("/IMG_3599.webp");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
   height: 75vh;
+  width: 100%;
 }
 
 @keyframes rotate {
